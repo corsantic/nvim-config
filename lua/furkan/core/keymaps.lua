@@ -1,12 +1,8 @@
 -- space bar leader key
 vim.g.mapleader = " "
 
-
--- telescope
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>fs', builtin.find_files, { })
-vim.keymap.set('n', '<leader>fp', builtin.git_files, { })
-vim.keymap.set('n', '<leader>fz', builtin.live_grep, { })
-vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { })
-
+-- buffers
+vim.keymap.set("n", "<leader>n", ":bn<cr>")
+vim.keymap.set("n", "<leader>p", ":bp<cr>")
+vim.keymap.set("n", "<leader>x", ":bd<cr>")
 

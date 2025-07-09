@@ -41,4 +41,11 @@ opt.splitbelow = true
 
 opt.iskeyword:append("-")
 
+-- set color theme
+vim.cmd("colorscheme catppuccin-macchiato") 
+
+--bufferline
+vim.opt.termguicolors = true
+--bufferline
+require("bufferline").setup{} 
 
