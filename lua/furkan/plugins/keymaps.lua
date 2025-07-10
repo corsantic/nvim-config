@@ -7,3 +7,11 @@ vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { })
 
 -- tree
 vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>")
+
+
+-- markview
+vim.keymap.set('n', "<leader>mv", ":Markview<cr>")
+
+
+-- nvim comment toggle
+vim.keymap.set({'n', 'v'}, '<leader>/', ":CommentToggle<cr>")

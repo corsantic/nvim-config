@@ -1,7 +1,3 @@
 # NVIM SETTINGS
-
-** PLUGINS **
-
-```sql
-select * from mv_patates;
-```
+## NeoVim Docs
+- https://alpha2phi.medium.com/learn-neovim-the-practical-way-8818fcf4830f

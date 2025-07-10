@@ -1,15 +1,26 @@
-local opt = vim.opt -- for conciseness
+local opt = vim.opt
 
+opt.encoding = "utf-8" -- set encoding
 
 -- line numbers
 opt.relativenumber = true
 opt.number = true
 
 -- tabs & indentation
-opt.tabstop = 2
-opt.shiftwidth = 2
+opt.tabstop = 4
+opt.softtabstop = 4
+opt.shiftwidth = 4
 opt.expandtab = true
 opt.autoindent = true
+
+
+opt.list = true -- show tab characters and trailing whitespace
+
+opt.scrolloff = 8 -- minimum number of lines to keep above and below the cursor
+opt.sidescrolloff = 8 --minimum number of columns to keep above and below the cursor
+
+opt.hlsearch = false -- do not highlight all matches on previous search pattern
+opt.incsearch = true -- incrementally highlight searches as you type
 
 
 -- line wrapping
@@ -45,7 +56,33 @@ opt.iskeyword:append("-")
 vim.cmd("colorscheme catppuccin-macchiato") 
 
 --bufferline
-vim.opt.termguicolors = true
+opt.termguicolors = true
 --bufferline
 require("bufferline").setup{} 
 
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = "*.py",
+  callback = function()
+    opt.textwidth = 79
+    opt.colorcolumn = "79"
+  end
+}) -- python formatting
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+  pattern = {"*.js", "*.html", "*.css", "*.lua"},
+  callback = function()
+    opt.tabstop = 2
+    opt.softtabstop = 2
+    opt.shiftwidth = 2
+  end
+}) -- javascript formatting
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+    pattern = "*",
+    callback = function()
+      if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
+        vim.cmd("normal! g`\"")
+      end
+    end
+}) -- return to last edit position when opening files
