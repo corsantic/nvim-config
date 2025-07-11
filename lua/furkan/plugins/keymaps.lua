@@ -15,3 +15,7 @@ vim.keymap.set('n', "<leader>mv", ":Markview<cr>")
 
 -- nvim comment toggle
 vim.keymap.set({'n', 'v'}, '<leader>/', ":CommentToggle<cr>")
+
+
+-- format code using LSP
+vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format)
