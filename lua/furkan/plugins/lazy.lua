@@ -83,6 +83,21 @@ require("lazy").setup({
         { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
       },
     },
+    -- Git fugitive
+    {
+      "tpope/vim-fugitive"
+
+    },
+
+
+   -- Harpoon
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" }
+    },
+
+
     -- Mason
     {
       'mason-org/mason.nvim',
