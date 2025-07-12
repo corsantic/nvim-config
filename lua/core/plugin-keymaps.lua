@@ -28,7 +28,6 @@ vim.keymap.set("n", "<leader>gs", vim.cmd.Git);
 
 
 
-
 -- harpoon
 local harpoon = require("harpoon")
 

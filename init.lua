@@ -1,4 +1,4 @@
-require("furkan.plugins.lazy")
-require("furkan.plugins.keymaps")
-require("furkan.core.options")
-require("furkan.core.keymaps")
+require("core.lazy")
+require("core.plugin-keymaps")
+require("core.options")
+require("core.keymaps")
