@@ -26,7 +26,11 @@ require("lazy").setup({
   spec = {
     -- add your plugins here
     { "catppuccin/nvim",         name = "catppuccin", priority = 1000 },
-
+    -- colorscheme
+    {
+      "luisiacc/gruvbox-baby",
+    },
+    -- telescope
     {
       'nvim-telescope/telescope.nvim',
       tag = '0.1.8',
@@ -79,7 +83,7 @@ require("lazy").setup({
       "jiaoshijie/undotree",
       dependencies = "nvim-lua/plenary.nvim",
       config = true,
-      keys = { -- load the plugin only when using it's keybinding:
+      keys = {       -- load the plugin only when using it's keybinding:
         { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
       },
     },
@@ -88,15 +92,12 @@ require("lazy").setup({
       "tpope/vim-fugitive"
 
     },
-
-
-   -- Harpoon
+    -- Harpoon
     {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim" }
+      "ThePrimeagen/harpoon",
+      branch = "harpoon2",
+      dependencies = { "nvim-lua/plenary.nvim" }
     },
-
 
     -- Mason
     {
@@ -132,16 +133,16 @@ require("lazy").setup({
           },
           mapping = cmp.mapping.preset.insert({
             ['<C-Space>'] = cmp.mapping.complete(),
-            ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
+            ['<CR>'] = cmp.mapping.confirm({ select = true }),             -- Accept currently selected item
             ['<Tab>'] = cmp.mapping(function(fallback)
               if cmp.visible() then
                 cmp.select_next_item()
               elseif luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
               elseif vim.fn.col('.') == 1 or vim.fn.getline('.'):sub(vim.fn.col('.') - 1, vim.fn.col('.') - 1):match('%s') then
-                fallback() -- 👈 insert a real tab
+                fallback()                 -- 👈 insert a real tab
               else
-                fallback() -- 👈 insert a real tab
+                fallback()                 -- 👈 insert a real tab
               end
             end, { "i", "s" }),
             ['<S-Tab>'] = cmp.mapping(function(fallback)
@@ -150,7 +151,7 @@ require("lazy").setup({
               elseif luasnip.jumpable(-1) then
                 luasnip.jump(-1)
               else
-                fallback() -- fallback will let your normal Shift-Tab keymap (if any) take over
+                fallback()                 -- fallback will let your normal Shift-Tab keymap (if any) take over
               end
             end, { "i", "s" }),
           }),
@@ -203,6 +204,8 @@ require("lazy").setup({
             vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
             vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
             vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+            vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
+            vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
             vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
             vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
             vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
@@ -212,7 +215,7 @@ require("lazy").setup({
         })
 
         require('mason-lspconfig').setup({
-          ensure_installed = { "ts_ls", "lua_ls" },
+          ensure_installed = { "ts_ls", "lua_ls", "eslint" },
           handlers = {
             -- this first function is the "default handler"
             -- it applies to every language server without a "custom handler"
