@@ -123,7 +123,19 @@ return {
           -- this first function is the "default handler"
           -- it applies to every language server without a "custom handler"
           function(server_name)
-            require('lspconfig')[server_name].setup({})
+            require('lspconfig')[server_name].setup({
+            })
+          end,
+          ["zls"] = function()
+            require("lspconfig").zls.setup({
+              settings = {
+                zls = {
+                  enable_autofix = false,
+                  line_break_length = 80,
+                  format_on_save = true,
+                },
+              },
+            })
           end,
           ["angularls"] = function()
             require("lspconfig").angularls.setup({
