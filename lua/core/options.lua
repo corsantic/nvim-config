@@ -19,17 +19,17 @@ opt.backup = false
 
 -- Enable persistent undo
 
-opt.undodir = os.getenv("HOME") .. "/.vim/undodir" 
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
 
 
-opt.list = true -- show tab characters and trailing whitespace
+opt.list = true       -- show tab characters and trailing whitespace
 
-opt.scrolloff = 8 -- minimum number of lines to keep above and below the cursor
+opt.scrolloff = 8     -- minimum number of lines to keep above and below the cursor
 opt.sidescrolloff = 8 --minimum number of columns to keep above and below the cursor
 
-opt.hlsearch = false -- do not highlight all matches on previous search pattern
-opt.incsearch = true -- incrementally highlight searches as you type
+opt.hlsearch = false  -- do not highlight all matches on previous search pattern
+opt.incsearch = true  -- incrementally highlight searches as you type
 
 
 -- line wrapping
@@ -63,37 +63,49 @@ opt.splitbelow = true
 opt.iskeyword:append("-")
 
 -- set color theme
-vim.cmd("colorscheme catppuccin-macchiato") 
+-- vim.cmd("colorscheme catppuccin-macchiato")
+vim.cmd("colorscheme rose-pine")
 
---bufferline
 opt.termguicolors = true
 opt.updatetime = 50
 --bufferline
-require("bufferline").setup{} 
+
+require("bufferline").setup {}
 
 
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = "*.py",
-  callback = function()
-    opt.textwidth = 79
-    opt.colorcolumn = "79"
-  end
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+    pattern = "*.py",
+    callback = function()
+        opt.textwidth = 79
+        opt.colorcolumn = "79"
+    end
 }) -- python formatting
 
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
-  pattern = {"*.js", "*.html", "*.css", "*.lua"},
-  callback = function()
-    opt.tabstop = 2
-    opt.softtabstop = 2
-    opt.shiftwidth = 2
-  end
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+    pattern = { "*.js", "*.html", "*.css", "*.lua" },
+    callback = function()
+        opt.tabstop = 2
+        opt.softtabstop = 2
+        opt.shiftwidth = 2
+    end
 }) -- javascript formatting
 
 vim.api.nvim_create_autocmd("BufReadPost", {
     pattern = "*",
     callback = function()
-      if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
-        vim.cmd("normal! g`\"")
-      end
+        if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
+            vim.cmd("normal! g`\"")
+        end
     end
 }) -- return to last edit position when opening files
+vim.filetype.add({
+    pattern = {
+        [".*%.component%.html"] = "htmlangular",
+    },
+})
+-- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+--     pattern = "*.htmlangular",
+--     callback = function()
+--         vim.bo.filetype = "html"
+--     end,
+-- }) -- set filetype for htmlangular files

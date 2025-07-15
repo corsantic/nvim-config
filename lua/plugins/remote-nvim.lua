@@ -1,9 +1,11 @@
-return {
+return
+{
   "amitds1997/remote-nvim.nvim",
-  version = "*",     -- Pin to GitHub releases
-  cmd = { "RemoteStart", "RemoteStop", "RemoteInfo", "RemoteCleanup", "RemoteConfigDel", "RemoteLog" },
+  version = "*",                        -- Pin to GitHub releases
   dependencies = {
-    "MunifTanjim/nui.nvim",     -- To build the plugin UI
+    "nvim-lua/plenary.nvim",            -- For standard functions
+    "MunifTanjim/nui.nvim",             -- To build the plugin UI
+    "nvim-telescope/telescope.nvim",    -- For picking b/w different remote methods
   },
   config = true,
   opts = {
@@ -19,13 +21,13 @@ return {
       -- cache_dir = <custom-path>,
     },
     remote = {
-      app_name = "nvim",     -- This directly maps to the value NVIM_APPNAME. If you use any other paths for configuration, also make sure to set this.
+      app_name = "nvim", -- This directly maps to the value NVIM_APPNAME. If you use any other paths for configuration, also make sure to set this.
       -- List of directories that should be copied over
       copy_dirs = {
         -- What to copy to remote's Neovim config directory
         config = {
           base = "$HOME/.config/nvim",
-          dirs = "*",     -- Directories that should be copied over. "*" means all directories. To specify a subset, use a list like {"lazy", "mason"} where "lazy", "mason" are subdirectories}
+          dirs = "*", -- Directories that should be copied over. "*" means all directories. To specify a subset, use a list like {"lazy", "mason"} where "lazy", "mason" are subdirectories}
           compression = {
             enabled = true,
             additional_opts = { "--exclude-vcs", "--exclude", "node_modules" },
@@ -81,5 +83,5 @@ return {
       --   end,
       -- })
     end,
-  }
+  },
 }

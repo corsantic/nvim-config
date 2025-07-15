@@ -1,4 +1,6 @@
 require("core.lazy")
-require("core.plugin-keymaps")
 require("core.options")
 require("core.keymaps")
+require("core.plugin-keymaps")
+require("core.colorscheme-options")
+require("core.remote-nvim-options")

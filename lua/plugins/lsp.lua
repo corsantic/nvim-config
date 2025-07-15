@@ -34,16 +34,16 @@ return {
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),   -- Accept currently selected item
+          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
           ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
             elseif vim.fn.col('.') == 1 or vim.fn.getline('.'):sub(vim.fn.col('.') - 1, vim.fn.col('.') - 1):match('%s') then
-              fallback()   -- 👈 insert a real tab
+              fallback() -- 👈 insert a real tab
             else
-              fallback()   -- 👈 insert a real tab
+              fallback() -- 👈 insert a real tab
             end
           end, { "i", "s" }),
           ['<S-Tab>'] = cmp.mapping(function(fallback)
@@ -52,7 +52,7 @@ return {
             elseif luasnip.jumpable(-1) then
               luasnip.jump(-1)
             else
-              fallback()   -- fallback will let your normal Shift-Tab keymap (if any) take over
+              fallback() -- fallback will let your normal Shift-Tab keymap (if any) take over
             end
           end, { "i", "s" }),
         }),
@@ -116,12 +116,21 @@ return {
       })
 
       require('mason-lspconfig').setup({
-        ensure_installed = { "ts_ls", "lua_ls", "eslint" },
+        ensure_installed = { "ts_ls",
+          "lua_ls", "angularls", "html", "zls"
+        },
         handlers = {
           -- this first function is the "default handler"
           -- it applies to every language server without a "custom handler"
           function(server_name)
             require('lspconfig')[server_name].setup({})
+          end,
+          ["angularls"] = function()
+            require("lspconfig").angularls.setup({
+              filetypes = { "typescript", "html", "htmlangular" }, -- ✅ important!
+              -- You can also set root_dir here if needed
+              -- root_dir = require("lspconfig.util").root_pattern("angular.json", "package.json")
+            })
           end,
         }
       })
