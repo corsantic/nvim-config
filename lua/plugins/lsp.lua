@@ -117,7 +117,8 @@ return {
 
       require('mason-lspconfig').setup({
         ensure_installed = { "ts_ls",
-          "lua_ls", "angularls", "html", "zls"
+          "lua_ls", "angularls", "html", "zls", "omnisharp",
+          "sqlls"
         },
         handlers = {
           -- this first function is the "default handler"
@@ -139,9 +140,16 @@ return {
           end,
           ["angularls"] = function()
             require("lspconfig").angularls.setup({
-              filetypes = { "typescript", "html", "htmlangular" }, -- ✅ important!
+              filetypes = { "typescript" }, -- ✅ important!
               -- You can also set root_dir here if needed
               -- root_dir = require("lspconfig.util").root_pattern("angular.json", "package.json")
+            })
+          end,
+          ["html"] = function()
+            require("lspconfig").html.setup({
+              filetypes = { "html", "htmlangular" }, -- ✅ important!
+              -- You can also set root_dir here if needed
+              -- root_dir = require("lspconfig.util").root_pattern("package.json")
             })
           end,
         }

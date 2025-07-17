@@ -7,15 +7,15 @@
 -- rosepine
 
 require("rose-pine").setup({
-  variant = "auto",        -- auto, main, moon, or dawn
-  dark_variant = "main",   -- main, moon, or dawn
+  variant = "auto",      -- auto, main, moon, or dawn
+  dark_variant = "main", -- main, moon, or dawn
   dim_inactive_windows = false,
   extend_background_behind_borders = true,
 
   enable = {
     terminal = true,
-    legacy_highlights = true,     -- Improve compatibility for previous versions of Neovim
-    migrations = true,            -- Handle deprecated options automatically
+    legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
+    migrations = true,        -- Handle deprecated options automatically
   },
 
   styles = {
@@ -66,6 +66,8 @@ require("rose-pine").setup({
   -- NOTE: Highlight groups are extended (merged) by default. Disable this
   -- per group via `inherit = false`
   highlight_groups = {
+    MatHighlight = { fg = "gold", bold = false },
+    AtStatement = { fg = "#00afff", italic = true },
     -- Comment = { fg = "foam" },
     -- StatusLine = { fg = "love", bg = "love", blend = 15 },
     -- VertSplit = { fg = "muted", bg = "muted" },
@@ -85,7 +87,40 @@ require("rose-pine").setup({
   end,
 })
 
-vim.cmd("colorscheme rose-pine")
+vim.cmd("colorscheme rose-pine-main")
 -- vim.cmd("colorscheme rose-pine-main")
 -- vim.cmd("colorscheme rose-pine-moon")
 -- vim.cmd("colorscheme rose-pine-dawn")
+--
+-- Custom MatHighlight group for Angular Material attributes
+-- these can be used for other color schemes
+-- local function define_custom_highlight_groups()
+--   vim.api.nvim_set_hl(0, "MatHighlight", {
+--     fg = "#ff8800",
+--     bold = false,
+--   })
+--
+--   vim.api.nvim_set_hl(0, "AtStatement", {
+--     fg = "#00afff",
+--     italic = true,
+--   })
+-- end
+-- -- Re-apply highlights on colorscheme change
+-- vim.api.nvim_create_autocmd("ColorScheme", {
+--   callback = define_custom_highlight_groups,
+-- })
+--
+-- -- Also apply them initially on startup
+-- define_custom_highlight_groups()
+--
+-- Add match patterns to HTML files
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+  pattern = "*.html",
+  callback = function()
+    -- Highlight mat-* attributes
+    vim.fn.matchadd("MatHighlight", [[\v(mat-[a-zA-Z0-9:_-]+)]])
+    -- Highlight @if, @else, etc.
+    vim.fn.matchadd("AtStatement", [[@\%(if\|else\|elseif\|foreach\|for\|while\|endif\|endforeach\|endfor\|endwhile\)]])
+    -- vim.fn.matchadd("AtStatement", [[\v\@(\?:if|else|elseif|foreach|for|while|endif|endforeach|endfor|endwhile)]])
+  end,
+})
