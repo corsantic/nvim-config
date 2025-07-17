@@ -117,7 +117,8 @@ return {
 
       require('mason-lspconfig').setup({
         ensure_installed = { "ts_ls",
-          "lua_ls", "angularls", "html", "zls", "omnisharp"
+          "lua_ls", "angularls", "html", "zls", "omnisharp",
+          "sqlls"
         },
         handlers = {
           -- this first function is the "default handler"

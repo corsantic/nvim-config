@@ -4,6 +4,8 @@ return {
     formatters_by_ft = {
       ["html"] = { "prettier" },
       ["htmlangular"] = { "prettier" },
+      ["scss"] = { "prettier" },
+      ["json"] = { "prettier" },
     },
     format_on_save = {
       timeout_ms = 500,

@@ -51,3 +51,7 @@ vim.keymap.set("n", "<leader>h4", function() harpoon:list():select(4) end)
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end)
+
+
+-- dbee
+vim.keymap.set("n", "<leader>ce", ":lua require('dbee').toggle()<CR>", { desc = "Toggle DB Explorer" })
