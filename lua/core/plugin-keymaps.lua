@@ -30,9 +30,6 @@ end, { desc = "Format with Conform or LSP" })
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git);
 
 
-
-
-
 -- harpoon
 local harpoon = require("harpoon")
 

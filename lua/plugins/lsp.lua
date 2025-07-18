@@ -31,6 +31,10 @@ return {
       cmp.setup({
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'vim-dadbod-completion' },
+          { name = 'luasnip' }, -- For luasnip users.
+          { name = 'buffer' },  -- For buffer words.
+          { name = 'path' },    -- For file paths.
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
