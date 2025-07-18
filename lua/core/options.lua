@@ -103,7 +103,11 @@ vim.filetype.add({
     [".*%.component%.html"] = "htmlangular",
   },
 })
-
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.cmd(":Dotenv ~/.default.env")
+  end
+})
 -- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 --   pattern = "*.html",
 --   callback = function()
