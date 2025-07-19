@@ -137,7 +137,7 @@ return {
                 zls = {
                   enable_autofix = false,
                   line_break_length = 80,
-                  format_on_save = true,
+                  format_on_save = false,
                 },
               },
             })

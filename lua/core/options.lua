@@ -108,17 +108,3 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.cmd(":Dotenv ~/.default.env")
   end
 })
--- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
---   pattern = "*.html",
---   callback = function()
---     -- Highlight mat-* attributes and tags
---     vim.fn.matchadd("Special", [[\v(mat-[a-zA-Z0-9-_]+)]])
---   end,
--- })
---
--- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
---     pattern = "*.htmlangular",
---     callback = function()
---         vim.bo.filetype = "html"
---     end,
--- }) -- set filetype for htmlangular files
