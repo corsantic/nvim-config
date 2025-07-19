@@ -1,4 +1,5 @@
 return {
+  { "nvim-treesitter/nvim-treesitter-refactor" },
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = { "OXY2DEV/markview.nvim" },
@@ -8,10 +9,15 @@ return {
         ensure_installed = { "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "html", "json", "typescript", "zig" },
         highlight = {
           enable = true
-        }
+        },
+        refactor = {
+          -- highlight_current_scope = { enable = true },
+          highlight_definitions = {
+            enable = true,
+            clear_on_cursor_move = true
+          },
+        },
       }
     end,
-
-
   }
 }

@@ -21,7 +21,7 @@ require("rose-pine").setup({
   styles = {
     bold = true,
     italic = false,
-    transparency = true,
+    transparency = false,
   },
 
   groups = {
@@ -71,7 +71,7 @@ require("rose-pine").setup({
     -- Comment = { fg = "foam" },
     -- StatusLine = { fg = "love", bg = "love", blend = 15 },
     -- VertSplit = { fg = "muted", bg = "muted" },
-    -- Visual = { fg = "base", bg = "text", inherit = false },
+    -- Visual = { fg = "base", bg = "gold", inherit = false },
   },
 
   before_highlight = function(group, highlight, palette)
@@ -87,7 +87,7 @@ require("rose-pine").setup({
   end,
 })
 
-vim.cmd("colorscheme rose-pine-moon")
+vim.cmd("colorscheme rose-pine-main")
 -- vim.cmd("colorscheme rose-pine-main")
 -- vim.cmd("colorscheme rose-pine-moon")
 -- vim.cmd("colorscheme rose-pine-dawn")
