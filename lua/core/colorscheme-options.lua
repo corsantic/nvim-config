@@ -57,10 +57,10 @@ require("rose-pine").setup({
 
   palette = {
     -- Override the builtin palette per variant
-    -- moon = {
-    --     base = '#18191a',
-    --     overlay = '#363738',
-    -- },
+    moon = {
+      base = '#18191a',
+      overlay = '#363738',
+    },
   },
 
   -- NOTE: Highlight groups are extended (merged) by default. Disable this
@@ -68,7 +68,7 @@ require("rose-pine").setup({
   highlight_groups = {
     MatHighlight = { fg = "gold", bold = false },
     AtStatement = { fg = "#00afff", italic = true },
-    -- StatusLine = { fg = "love", bg = "love", blend = 15 },
+    StatusLine = { fg = "gold", bg = "rose", blend = 15 },
     -- Comment = { fg = "foam" },
     -- VertSplit = { fg = "muted", bg = "muted" },
     Visual = { fg = "", bg = visual_color, inherit = false, blend = 25 },
@@ -87,31 +87,10 @@ require("rose-pine").setup({
   end,
 })
 
-vim.cmd("colorscheme rose-pine-main")
+vim.cmd("colorscheme rose-pine-moon")
 -- vim.cmd("colorscheme rose-pine-main")
 -- vim.cmd("colorscheme rose-pine-moon")
 -- vim.cmd("colorscheme rose-pine-dawn")
---
--- Custom MatHighlight group for Angular Material attributes
--- these can be used for other color schemes
--- local function define_custom_highlight_groups()
---   vim.api.nvim_set_hl(0, "MatHighlight", {
---     fg = "#ff8800",
---     bold = false,
---   })
---
---   vim.api.nvim_set_hl(0, "AtStatement", {
---     fg = "#00afff",
---     italic = true,
---   })
--- end
--- -- Re-apply highlights on colorscheme change
--- vim.api.nvim_create_autocmd("ColorScheme", {
---   callback = define_custom_highlight_groups,
--- })
---
--- -- Also apply them initially on startup
--- define_custom_highlight_groups()
 --
 -- Add match patterns to HTML files
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
