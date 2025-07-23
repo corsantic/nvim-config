@@ -6,6 +6,7 @@ return {
       ["htmlangular"] = { "prettier" },
       ["scss"] = { "prettier" },
       ["json"] = { "prettier" },
+      ["sql"] = { "prettier" },
     },
     format_on_save = {
       timeout_ms = 500,

@@ -5,7 +5,7 @@
 
 
 -- rosepine
-
+visual_color = "#a8a8a8";
 require("rose-pine").setup({
   variant = "auto",      -- auto, main, moon, or dawn
   dark_variant = "main", -- main, moon, or dawn
@@ -68,10 +68,10 @@ require("rose-pine").setup({
   highlight_groups = {
     MatHighlight = { fg = "gold", bold = false },
     AtStatement = { fg = "#00afff", italic = true },
-    -- Comment = { fg = "foam" },
     -- StatusLine = { fg = "love", bg = "love", blend = 15 },
+    -- Comment = { fg = "foam" },
     -- VertSplit = { fg = "muted", bg = "muted" },
-    -- Visual = { fg = "base", bg = "gold", inherit = false },
+    Visual = { fg = "", bg = visual_color, inherit = false, blend = 25 },
   },
 
   before_highlight = function(group, highlight, palette)
@@ -121,6 +121,5 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
     vim.fn.matchadd("MatHighlight", [[\v(mat-[a-zA-Z0-9:_-]+)]])
     -- Highlight @if, @else, etc.
     vim.fn.matchadd("AtStatement", [[@\%(if\|else\|elseif\|foreach\|for\|while\|endif\|endforeach\|endfor\|endwhile\)]])
-    -- vim.fn.matchadd("AtStatement", [[\v\@(\?:if|else|elseif|foreach|for|while|endif|endforeach|endfor|endwhile)]])
   end,
 })
