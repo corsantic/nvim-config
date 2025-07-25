@@ -23,6 +23,7 @@ return {
     dependencies = {
       "L3MON4D3/LuaSnip",
       "hrsh7th/cmp-nvim-lsp",
+      "saadparwaiz1/cmp_luasnip",
     },
     config = function()
       local cmp = require('cmp')
@@ -122,8 +123,9 @@ return {
 
       require('mason-lspconfig').setup({
         ensure_installed = { "ts_ls",
-          "lua_ls", "angularls", "html", "zls", "omnisharp",
-          "sqlls"
+          "lua_ls", "angularls", "html", "zls",
+          "sqlls", "omnisharp"
+
         },
         handlers = {
           -- this first function is the "default handler"
@@ -155,6 +157,15 @@ return {
               filetypes = { "html", "htmlangular" }, -- ✅ important!
               -- You can also set root_dir here if needed
               -- root_dir = require("lspconfig.util").root_pattern("package.json")
+            })
+          end,
+          ["omnisharp"] = function()
+            require('lspconfig').omnisharp.setup({
+              cmd = { "OmniSharp", "-z", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+              enable_editorconfig_support = true,
+              enable_roslyn_analyzers = true,
+              organize_imports_on_format = true,
+              enable_import_completion = true,
             })
           end,
         }

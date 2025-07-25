@@ -22,10 +22,10 @@ vim.keymap.set({ 'n', 'v' }, '<leader>/', ":CommentToggle<cr>")
 -- vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format)
 vim.keymap.set("n", "<leader>fm", function()
   local conform = require("conform")
-  local formatted = conform.format({ async = false, quiet = true })
-  if not formatted then
-    vim.lsp.buf.format()
-  end
+  conform.format({
+    async = false,
+    lsp_fallback = true,
+  })
 end, { desc = "Format with Conform or LSP" })
 
 -- fugitive
