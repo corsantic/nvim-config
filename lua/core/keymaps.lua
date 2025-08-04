@@ -2,8 +2,8 @@
 vim.g.mapleader = " "
 
 -- buffers
-vim.keymap.set("n", "<leader>bn", ":bn<cr>")
-vim.keymap.set("n", "<leader>bp", ":bp<cr>")
+vim.keymap.set("n", "<leader>l", ":bn<cr>")
+vim.keymap.set("n", "<leader>h", ":bp<cr>")
 vim.keymap.set("n", "<leader>bx", ":bd<cr>")
 
 
@@ -37,7 +37,3 @@ vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>mx", "<cmd>!chmod +x %<CR>", { silent = true })
-
-
-
-
