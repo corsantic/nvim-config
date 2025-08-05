@@ -8,6 +8,7 @@ return {
       json = { "prettier" },
       sql = { "prettier" },
       cs = { "csharpier" },
+      python = { "black" },
     },
     formatters = {
       csharpier = {

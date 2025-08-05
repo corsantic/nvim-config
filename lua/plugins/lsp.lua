@@ -124,7 +124,7 @@ return {
       require('mason-lspconfig').setup({
         ensure_installed = { "ts_ls",
           "lua_ls", "angularls", "html", "zls",
-          "sqlls", "omnisharp"
+          "sqlls", "omnisharp", "basedpyright"
 
         },
         handlers = {

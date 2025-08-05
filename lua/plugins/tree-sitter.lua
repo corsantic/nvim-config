@@ -9,7 +9,8 @@ return {
         ensure_installed =
         {
           "lua", "vim", "vimdoc", "query", "markdown",
-          "markdown_inline", "html", "json", "typescript", "zig", "c_sharp"
+          "markdown_inline", "html", "json", "typescript", "zig", "c_sharp",
+          "python"
         },
         highlight = {
           enable = true
