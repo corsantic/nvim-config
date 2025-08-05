@@ -116,6 +116,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.cmd(":Dotenv ~/.default.env")
   end
 })
-
+-- highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
 
 -- lspconfig setup
