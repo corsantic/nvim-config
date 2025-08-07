@@ -66,7 +66,7 @@ require("rose-pine").setup({
   -- NOTE: Highlight groups are extended (merged) by default. Disable this
   -- per group via `inherit = false`
   highlight_groups = {
-    MatHighlight = { fg = "gold", bold = false },
+    -- MatHighlight = { fg = "#a442f5", bold = false },
     AtStatement = { fg = "#00afff", italic = true },
     StatusLine = { fg = "gold", bg = "rose", blend = 15 },
     -- Comment = { fg = "foam" },
@@ -97,7 +97,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   pattern = "*.html",
   callback = function()
     -- Highlight mat-* attributes
-    vim.fn.matchadd("MatHighlight", [[\v(mat-[a-zA-Z0-9:_-]+)]])
+    -- vim.fn.matchadd("MatHighlight", [[\v(mat-[a-zA-Z0-9:_-]+)]])
     -- Highlight @if, @else, etc.
     vim.fn.matchadd("AtStatement", [[@\%(if\|else\|elseif\|foreach\|for\|while\|endif\|endforeach\|endfor\|endwhile\)]])
   end,
