@@ -122,7 +122,8 @@ return {
       })
 
       require('mason-lspconfig').setup({
-        ensure_installed = { "ts_ls",
+        ensure_installed = {
+          "ts_ls",
           "lua_ls", "angularls", "html", "zls",
           "sqlls", "omnisharp", "basedpyright"
 
@@ -150,6 +151,20 @@ return {
               filetypes = { "typescript" }, -- ✅ important!
               -- You can also set root_dir here if needed
               -- root_dir = require("lspconfig.util").root_pattern("angular.json", "package.json")
+            })
+          end,
+          ["ts_ls"] = function()
+            require("lspconfig").ts_ls.setup({
+              root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", ".git"),
+              on_attach = function(client)
+                -- Only enable formatting
+                client.server_capabilities.definitionProvider = true
+                client.server_capabilities.referencesProvider = false
+                client.server_capabilities.hoverProvider = false
+                client.server_capabilities.renameProvider = false
+                -- ... disable everything except:
+                client.server_capabilities.documentFormattingProvider = true
+              end,
             })
           end,
           ["html"] = function()
