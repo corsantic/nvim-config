@@ -2,8 +2,8 @@
 vim.g.mapleader = " "
 
 -- buffers
-vim.keymap.set("n", "<leader>l", ":bn<cr>")
-vim.keymap.set("n", "<leader>h", ":bp<cr>")
+vim.keymap.set("n", "L", ":bn<cr>")
+vim.keymap.set("n", "H", ":bp<cr>")
 vim.keymap.set("n", "<leader>bx", ":bd<cr>")
 vim.keymap.set("n", "<leader>bd", ":bd | b#<cr>")
 
