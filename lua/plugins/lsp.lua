@@ -41,10 +41,10 @@ return {
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
           ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
+            if luasnip.expand_or_jumpable() and not cmp.visible() then
               luasnip.expand_or_jump()
+            elseif cmp.visible() then
+              cmp.select_next_item()
             elseif vim.fn.col('.') == 1 or vim.fn.getline('.'):sub(vim.fn.col('.') - 1, vim.fn.col('.') - 1):match('%s') then
               fallback() -- 👈 insert a real tab
             else
@@ -52,10 +52,10 @@ return {
             end
           end, { "i", "s" }),
           ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
+            if luasnip.jumpable(-1) and not cmp.visible() then
               luasnip.jump(-1)
+            elseif cmp.visible() then
+              cmp.select_prev_item()
             else
               fallback() -- fallback will let your normal Shift-Tab keymap (if any) take over
             end
@@ -63,7 +63,7 @@ return {
         }),
         snippet = {
           expand = function(args)
-            vim.snippet.expand(args.body)
+            luasnip.lsp_expand(args.body)
           end,
         },
       })

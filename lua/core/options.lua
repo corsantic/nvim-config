@@ -120,20 +120,38 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 -- highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
 
 vim.api.nvim_create_autocmd({ "VimResized" }, {
-    desc = "Resize nvim-tree if nvim window got resized",
+  desc = "Resize nvim-tree if nvim window got resized",
 
-    group = vim.api.nvim_create_augroup("NvimTreeResize", { clear = true }),
-    callback = function()
-        local percentage = 15
+  group = vim.api.nvim_create_augroup("NvimTreeResize", { clear = true }),
+  callback = function()
+    local percentage = 15
 
-        local ratio = percentage / 100
-        local width = math.floor(vim.go.columns * ratio)
-        vim.cmd("tabdo NvimTreeResize " .. width)
-    end,
+    local ratio = percentage / 100
+    local width = math.floor(vim.go.columns * ratio)
+    vim.cmd("tabdo NvimTreeResize " .. width)
+  end,
 })
+
+
+-- luasnip setup
+local luasnip = require('luasnip')
+function leave_snippet()
+  if
+      ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
+      and luasnip.session.current_nodes[vim.api.nvim_get_current_buf()]
+      and not luasnip.session.jump_active
+  then
+    luasnip.unlink_current()
+  end
+end
+
+-- stop snippets when you leave to normal mode
+vim.api.nvim_command([[
+    autocmd ModeChanged * lua leave_snippet()
+]])
