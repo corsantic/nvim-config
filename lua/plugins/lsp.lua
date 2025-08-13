@@ -125,8 +125,7 @@ return {
         ensure_installed = {
           "ts_ls",
           "lua_ls", "angularls", "html", "zls",
-          "sqlls", "omnisharp", "basedpyright"
-
+          "sqlls", "omnisharp", "basedpyright", "elixirls"
         },
         handlers = {
           -- this first function is the "default handler"

@@ -10,7 +10,7 @@ return {
         {
           "lua", "vim", "vimdoc", "query", "markdown",
           "markdown_inline", "html", "json", "typescript", "zig", "c_sharp",
-          "python"
+          "elixir", "python", "heex"
         },
         highlight = {
           enable = true
