@@ -36,6 +36,7 @@ return {
           { name = 'luasnip' }, -- For luasnip users.
           { name = 'buffer' },  -- For buffer words.
           { name = 'path' },    -- For file paths.
+          { name = 'codeium'}
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
