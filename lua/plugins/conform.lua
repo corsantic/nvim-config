@@ -6,7 +6,7 @@ return {
       htmlangular = { "prettier" },
       scss = { "prettier" },
       json = { "prettier" },
-      sql = { "prettier" },
+      sql = { "sql_formatter" },
       cs = { "csharpier" },
       python = { "black" },
     },
