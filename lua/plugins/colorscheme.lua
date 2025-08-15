@@ -3,6 +3,7 @@ return {
   {
     "luisiacc/gruvbox-baby",
   },
+  {"rebelot/kanagawa.nvim"},
   {
     "rose-pine/neovim",
     name = "rose-pine",
