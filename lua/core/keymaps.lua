@@ -37,3 +37,10 @@ vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>mx", "<cmd>!chmod +x %<CR>", { silent = true })
+
+
+-- Window navigation remaps
+vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { silent = true })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
