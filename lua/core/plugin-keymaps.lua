@@ -101,3 +101,7 @@ vim.keymap.set({ "n", "x" }, "<leader>rbf", ":Refactor extract_block_to_file")
 
 -- vim bbye
 vim.keymap.set("n", "<leader>q", ":Bdelete<cr>")
+
+
+-- rest-nvim
+vim.keymap.set("n", "<leader>tr", ":Rest run<cr>")
