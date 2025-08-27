@@ -36,7 +36,7 @@ return {
           { name = 'luasnip' }, -- For luasnip users.
           { name = 'buffer' },  -- For buffer words.
           { name = 'path' },    -- For file paths.
-          { name = 'codeium'}
+          { name = 'codeium' }
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
@@ -185,7 +185,8 @@ return {
           end,
           ["basedpyright"] = function()
             require("lspconfig").basedpyright.setup({
-              root_dir = require("lspconfig.util").root_pattern("pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git"),
+              root_dir = require("lspconfig.util").root_pattern("pyproject.toml", "setup.py", "setup.cfg",
+                "requirements.txt", ".git"),
               settings = {
                 basedpyright = {
                   autoImportCompletions = true,

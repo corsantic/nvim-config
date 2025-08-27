@@ -6,6 +6,13 @@ vim.keymap.set('n', '<leader>fz', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fr', builtin.grep_string, {})
+vim.keymap.set('n', '<leader>ff', builtin.current_buffer_fuzzy_find, {})
+vim.keymap.set('n', '<leader>fd', function()
+  builtin.diagnostics({
+    bufnr = 0
+  })
+end, {})
+vim.keymap.set('n', '<leader>fh', builtin.command_history, {})
 vim.keymap.set('n', '<leader>fg', builtin.git_status, {})
 vim.keymap.set('n', 'gr', builtin.lsp_references, {})
 
@@ -86,10 +93,10 @@ vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ")
 
 vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var")
 
-vim.keymap.set("n", "<leader>rI", ":Refactor inline_func")
+vim.keymap.set({ "n", "x" }, "<leader>rI", ":Refactor inline_func")
 
-vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
-vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
+vim.keymap.set({ "n", "x" }, "<leader>rb", ":Refactor extract_block")
+vim.keymap.set({ "n", "x" }, "<leader>rbf", ":Refactor extract_block_to_file")
 
 
 -- vim bbye
