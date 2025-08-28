@@ -6,18 +6,8 @@ return {
       htmlangular = { "prettier" },
       scss = { "prettier" },
       json = { "prettier" },
-      sql = { "sql_formatter" },
-      cs = { "csharpier" },
-      python = { "black" },
     },
     formatters = {
-      csharpier = {
-        command = "csharpier",
-        args = {
-          "format",
-          "--write-stdout"
-        },
-      },
       format_on_save = {
         timeout_ms = 500,
         lsp_fallback = true,
