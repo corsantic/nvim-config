@@ -1,7 +1,10 @@
 return {
-  "m4xshen/autoclose.nvim",
-  event = "VeryLazy",
-  opts = {
-    disable_filetype = { "TelescopePrompt", "NvimTree", "text", "markdown" },
-  },
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    config = true,
+    opts = {
+        disable_filetype = { "TelescopePrompt" , "vim" }
+    }
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
 }

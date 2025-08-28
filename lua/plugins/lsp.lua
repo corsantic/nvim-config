@@ -52,9 +52,9 @@ return {
             elseif cmp.visible() then
               cmp.select_next_item()
             elseif vim.fn.col('.') == 1 or vim.fn.getline('.'):sub(vim.fn.col('.') - 1, vim.fn.col('.') - 1):match('%s') then
-              fallback() -- 👈 insert a real tab
+              fallback()
             else
-              fallback() -- 👈 insert a real tab
+              fallback()
             end
           end, { "i", "s" }),
           ['<S-Tab>'] = cmp.mapping(function(fallback)
@@ -79,8 +79,8 @@ return {
   -- LSP
   {
     'neovim/nvim-lspconfig',
-    tag = 'v1.8.0',
-    pin = true,
+    -- tag = 'v1.8.0',
+    -- pin = true,
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
@@ -196,6 +196,11 @@ return {
                   typeCheckingMode = "basic",
                 },
               },
+            })
+          end,
+          ["elixirls"] = function()
+            require("lspconfig").elixirls.setup({
+              filetypes = { "elixir", "eelixir", "heex", "surface" },
             })
           end,
         }
