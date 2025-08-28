@@ -125,25 +125,13 @@ return {
       require('mason-lspconfig').setup({
         ensure_installed = {
           "ts_ls",
-          "lua_ls", "angularls", "html", "zls",
-          "sqlls", "omnisharp", "basedpyright", "elixirls"
+          "lua_ls", "angularls", "html" 
         },
         handlers = {
           -- this first function is the "default handler"
           -- it applies to every language server without a "custom handler"
           function(server_name)
             require('lspconfig')[server_name].setup({
-            })
-          end,
-          ["zls"] = function()
-            require("lspconfig").zls.setup({
-              settings = {
-                zls = {
-                  enable_autofix = false,
-                  line_break_length = 80,
-                  format_on_save = false,
-                },
-              },
             })
           end,
           ["angularls"] = function()
@@ -172,30 +160,6 @@ return {
               filetypes = { "html", "htmlangular" }, -- ✅ important!
               -- You can also set root_dir here if needed
               -- root_dir = require("lspconfig.util").root_pattern("package.json")
-            })
-          end,
-          ["omnisharp"] = function()
-            require('lspconfig').omnisharp.setup({
-              cmd = { "OmniSharp", "-z", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
-              enable_editorconfig_support = true,
-              enable_roslyn_analyzers = true,
-              organize_imports_on_format = true,
-              enable_import_completion = true,
-            })
-          end,
-          ["basedpyright"] = function()
-            require("lspconfig").basedpyright.setup({
-              root_dir = require("lspconfig.util").root_pattern("pyproject.toml", "setup.py", "setup.cfg",
-                "requirements.txt", ".git"),
-              settings = {
-                basedpyright = {
-                  autoImportCompletions = true,
-                  autoSearchPaths = true,
-                  diagnosticMode = "workspace",
-                  useLibraryCodeForTypes = true,
-                  typeCheckingMode = "basic",
-                },
-              },
             })
           end,
         }
