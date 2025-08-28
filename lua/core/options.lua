@@ -89,7 +89,7 @@ require("telescope").setup {
             theme = "cursor",
             layout_config = {
                 width = 0.8,
-                height = 0.2,
+                height = 0.5,
             },
         },
         buffers = {
@@ -108,7 +108,7 @@ require("telescope").setup {
     }
 }
 require("telescope").load_extension("ui-select")
-
+require("telescope").load_extension("rest")
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     pattern = "*.py",
     callback = function()
@@ -125,6 +125,13 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
         opt.shiftwidth = 2
     end
 }) -- javascript formatting
+
+vim.api.nvim_create_autocmd("FileType",  {
+      pattern = { "json" },
+      callback = function()
+        vim.api.nvim_set_option_value("formatprg", "jq", { scope = 'local' })
+      end,
+}) -- json formatting
 
 vim.api.nvim_create_autocmd("BufReadPost", {
     pattern = "*",
@@ -183,3 +190,5 @@ end
 vim.api.nvim_command([[
     autocmd ModeChanged * lua leave_snippet()
 ]])
+
+

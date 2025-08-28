@@ -3,15 +3,20 @@ return {
   -- Mason
   {
     'mason-org/mason.nvim',
-    tag = 'v1.11.0',
-    pin = true,
+    -- tag = 'v1.11.0',
+    -- pin = true,
     lazy = false,
-    opts = {},
+    opts = {
+      registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      }
+    },
   },
   {
     'mason-org/mason-lspconfig.nvim',
-    tag = 'v1.32.0',
-    pin = true,
+    -- tag = 'v1.32.0',
+    -- pin = true,
     lazy = true,
     config = false,
   },
@@ -126,7 +131,7 @@ return {
         ensure_installed = {
           "ts_ls",
           "lua_ls", "angularls", "html", "zls",
-          "sqlls", "omnisharp", "basedpyright", "elixirls"
+          "sqlls", "basedpyright", "elixirls"
         },
         handlers = {
           -- this first function is the "default handler"
@@ -148,7 +153,7 @@ return {
           end,
           ["angularls"] = function()
             require("lspconfig").angularls.setup({
-              filetypes = { "typescript" }, -- ✅ important!
+              filetypes = { "typescript" }, 
               -- You can also set root_dir here if needed
               -- root_dir = require("lspconfig.util").root_pattern("angular.json", "package.json")
             })
@@ -174,13 +179,8 @@ return {
               -- root_dir = require("lspconfig.util").root_pattern("package.json")
             })
           end,
-          ["omnisharp"] = function()
-            require('lspconfig').omnisharp.setup({
-              cmd = { "OmniSharp", "-z", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
-              enable_editorconfig_support = true,
-              enable_roslyn_analyzers = true,
-              organize_imports_on_format = true,
-              enable_import_completion = true,
+          ["roslyn"] = function()
+            require('lspconfig').roslyn.setup({
             })
           end,
           ["basedpyright"] = function()
