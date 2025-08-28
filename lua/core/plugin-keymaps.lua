@@ -14,7 +14,7 @@ vim.keymap.set('n', '<leader>fd', function()
 end, {})
 vim.keymap.set('n', '<leader>fh', builtin.command_history, {})
 vim.keymap.set('n', '<leader>fg', builtin.git_status, {})
-vim.keymap.set('n', 'gr', builtin.lsp_references, {})
+vim.keymap.set('n', '<leader>gr', builtin.lsp_references, {})
 
 
 -- tree

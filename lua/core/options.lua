@@ -74,81 +74,109 @@ require("bufferline").setup {}
 
 -- telescope setup
 require("telescope").setup {
-  pickers = {
-    find_files = {
-      -- theme = "dropdown",
+    extensions = {
+        ["ui-select"] = {
+            require("telescope.themes").get_dropdown {
+                -- even more opts
+            }
+        }
     },
-  }
+    pickers = {
+        find_files = {
+            theme = "ivy",
+        },
+        lsp_references = {
+            theme = "cursor",
+            layout_config = {
+                width = 0.8,
+                height = 0.2,
+            },
+        },
+        buffers = {
+            theme = "ivy",
+            sort_lastused = true,
+        },
+        diagnostics = {
+            theme = "ivy",
+        },
+        current_buffer_fuzzy_find = {
+            theme = "dropdown",
+        },
+        command_history = {
+            theme = "ivy",
+        },
+    }
 }
+require("telescope").load_extension("ui-select")
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = "*.py",
-  callback = function()
-    opt.textwidth = 79
-    opt.colorcolumn = "79"
-  end
+    pattern = "*.py",
+    callback = function()
+        opt.textwidth = 79
+        opt.colorcolumn = "79"
+    end
 }) -- python formatting
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = { "*.js", "*.html", "*.css", "*.lua" },
-  callback = function()
-    opt.tabstop = 2
-    opt.softtabstop = 2
-    opt.shiftwidth = 2
-  end
+    pattern = { "*.js", "*.html", "*.css", "*.lua" },
+    callback = function()
+        opt.tabstop = 2
+        opt.softtabstop = 2
+        opt.shiftwidth = 2
+    end
 }) -- javascript formatting
 
 vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "*",
-  callback = function()
-    if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
-      vim.cmd("normal! g`\"")
+    pattern = "*",
+    callback = function()
+        if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
+            vim.cmd("normal! g`\"")
+        end
     end
-  end
 }) -- return to last edit position when opening files
 vim.filetype.add({
-  pattern = {
-    [".*%.component%.html"] = "htmlangular",
-  },
+    pattern = {
+        [".*%.component%.html"] = "htmlangular",
+    },
 })
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    vim.cmd(":Dotenv ~/.default.env")
-    -- resize nvim-tree on startup
-    vim.cmd(":NvimTreeResize 40")
-  end
+    callback = function()
+        vim.cmd(":Dotenv ~/.default.env")
+        -- resize nvim-tree on startup
+        vim.cmd(":NvimTreeResize 40")
+    end
 })
 -- highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
 vim.api.nvim_create_autocmd({ "VimResized" }, {
-  desc = "Resize nvim-tree if nvim window got resized",
+    desc = "Resize nvim-tree if nvim window got resized",
 
-  group = vim.api.nvim_create_augroup("NvimTreeResize", { clear = true }),
-  callback = function()
-    local percentage = 15
+    group = vim.api.nvim_create_augroup("NvimTreeResize", { clear = true }),
+    callback = function()
+        local percentage = 15
 
-    local ratio = percentage / 100
-    local width = math.floor(vim.go.columns * ratio)
-    vim.cmd("tabdo NvimTreeResize " .. width)
-  end,
+        local ratio = percentage / 100
+        local width = math.floor(vim.go.columns * ratio)
+        vim.cmd("tabdo NvimTreeResize " .. width)
+    end,
 })
 
 
 -- luasnip setup
 local luasnip = require('luasnip')
 function leave_snippet()
-  if
-      ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
-      and luasnip.session.current_nodes[vim.api.nvim_get_current_buf()]
-      and not luasnip.session.jump_active
-  then
-    luasnip.unlink_current()
-  end
+    if
+        ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
+        and luasnip.session.current_nodes[vim.api.nvim_get_current_buf()]
+        and not luasnip.session.jump_active
+    then
+        luasnip.unlink_current()
+    end
 end
 
 -- stop snippets when you leave to normal mode
