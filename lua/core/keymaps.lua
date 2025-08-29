@@ -39,6 +39,7 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 vim.keymap.set("n", "<leader>mx", "<cmd>!chmod +x %<CR>", { silent = true })
 
 
+
 -- Window navigation remaps
 vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
@@ -49,3 +50,14 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
 -- set wrap and nowrap
 vim.keymap.set("n", "<leader>sw", ":set wrap<cr>")
 vim.keymap.set("n", "<leader>snw", ":set nowrap<cr>")
+
+
+-- show virtual text of diagnostics
+
+vim.keymap.set("n", "<leader>sd", function()
+  -- toggle
+  local is_visible = vim.diagnostic.config().virtual_text;
+  vim.diagnostic.config({
+    virtual_text = not is_visible
+  })
+end)
