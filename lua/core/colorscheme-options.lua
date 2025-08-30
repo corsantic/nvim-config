@@ -111,16 +111,16 @@ require('kanagawa').setup({
       return { fg = color, bg = c(color):blend(theme.ui.bg, 0.95):to_hex() }
     end
     return {
-      NormalFloat = { bg = "none" },
-      FloatBorder = { bg = "none" },
-      FloatTitle = { bg = "none" },
+      -- NormalFloat = { bg = "none" },
+      -- FloatBorder = { bg = "none" },
+      -- FloatTitle = { bg = "none" },
       TelescopeTitle = { fg = theme.ui.special, bold = true },
       TelescopePromptNormal = { bg = theme.ui.bg_p1 },
-      TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+      -- TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
       TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-      TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+      -- TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
       TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-      TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+      -- TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
       -- Save an hlgroup with dark background and dimmed foreground
       -- so that you can use it where your still want darker windows.
       -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark

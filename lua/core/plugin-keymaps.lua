@@ -13,7 +13,7 @@ vim.keymap.set('n', '<leader>fd', function()
   })
 end, {})
 -- it was not working in options. TODO: check this and configure it in options.lua for dropdown
-vim.keymap.set('n', '<leader>cc',
+vim.keymap.set({ "n", "x" }, '<leader>cc',
   function() require('telescope').extensions.neoclip.default(require('telescope.themes').get_dropdown()) end, {})
 vim.keymap.set('n', '<leader>fh', builtin.command_history, {})
 vim.keymap.set('n', '<leader>fg', builtin.git_status, {})
