@@ -12,6 +12,7 @@ vim.keymap.set('n', '<leader>fd', function()
     bufnr = 0
   })
 end, {})
+vim.keymap.set('n', '<leader>fad', builtin.diagnostics, {})
 -- it was not working in options. TODO: check this and configure it in options.lua for dropdown
 vim.keymap.set({ "n", "x" }, '<leader>cc',
   function() require('telescope').extensions.neoclip.default(require('telescope.themes').get_dropdown()) end, {})

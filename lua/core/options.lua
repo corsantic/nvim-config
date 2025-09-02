@@ -46,7 +46,7 @@ opt.cursorline = true
 -- appearance
 
 opt.termguicolors = true
-opt.colorcolumn = "80"
+opt.colorcolumn = "100"
 opt.background = "dark"
 opt.signcolumn = "yes"
 

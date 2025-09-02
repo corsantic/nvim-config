@@ -9,8 +9,16 @@ return {
       sql = { "sql_formatter" },
       cs = { "csharpier" },
       python = { "black" },
+      xml = { "xmlformatter" },
     },
     formatters = {
+      prettier = {
+        prepend_args = {
+          "--print-width", "100",
+          "--tab-width", "2",
+          "--use-tabs", "false"
+        },
+      },
       csharpier = {
         command = "csharpier",
         args = {
