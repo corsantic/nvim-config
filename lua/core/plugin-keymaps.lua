@@ -109,3 +109,7 @@ vim.keymap.set("n", "<leader>q", ":Bdelete<cr>")
 
 -- rest-nvim
 vim.keymap.set("n", "<leader>tr", ":Rest run<cr>")
+
+
+-- vimdadbot
+vim.keymap.set("n", "<leader>vd", ":DBUI<cr>")
