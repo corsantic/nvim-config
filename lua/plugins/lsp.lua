@@ -130,7 +130,7 @@ return {
       require('mason-lspconfig').setup({
         ensure_installed = {
           "ts_ls",
-          "lua_ls", "angularls", "html", "zls",
+          "lua_ls", "angularls", "cssls", "emmet_language_server", "zls",
           "sqlls", "basedpyright", "elixirls"
         },
         handlers = {
@@ -153,13 +153,13 @@ return {
           end,
           ["angularls"] = function()
             require("lspconfig").angularls.setup({
-              filetypes = { "typescript" }, 
-              -- You can also set root_dir here if needed
-              -- root_dir = require("lspconfig.util").root_pattern("angular.json", "package.json")
+              filetypes = { "typescript", "html", "htmlangular" },
+              root_dir = require("lspconfig.util").root_pattern("angular.json", "project.json", "package.json"),
             })
           end,
           ["ts_ls"] = function()
             require("lspconfig").ts_ls.setup({
+              filetypes = { "typescript" },
               root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", ".git"),
               on_attach = function(client)
                 -- Only enable formatting
@@ -172,11 +172,14 @@ return {
               end,
             })
           end,
-          ["html"] = function()
-            require("lspconfig").html.setup({
-              filetypes = { "html", "htmlangular" }, -- ✅ important!
-              -- You can also set root_dir here if needed
-              -- root_dir = require("lspconfig.util").root_pattern("package.json")
+          ["cssls"] = function()
+            require("lspconfig").cssls.setup({
+              filetypes = { "css", "scss", "sass", "less" },
+            })
+          end,
+          ["emmet_language_server"] = function()
+            require("lspconfig").emmet_language_server.setup({
+              filetypes = { "html", "htmlangular", "css", "scss", "sass", "less" },
             })
           end,
           ["roslyn"] = function()

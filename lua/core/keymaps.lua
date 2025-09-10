@@ -40,6 +40,18 @@ vim.keymap.set("n", "<leader>mx", "<cmd>!chmod +x %<CR>", { silent = true })
 
 vim.keymap.set("v", "<leader>k", [[:s///g<Left><Left><Left>]])
 
+-- copy selected text and open substitute command with copied text
+vim.keymap.set("v", "<leader>kr", function()
+  -- yank selected text to register 'a'
+  vim.cmd('normal! "ay')
+  -- get the yanked text
+  local yanked_text = vim.fn.getreg('a')
+  -- escape special characters for regex
+  yanked_text = vim.fn.escape(yanked_text, '/\\')
+  -- open substitute command with yanked text
+  vim.api.nvim_feedkeys(':%s/' .. yanked_text .. '//g' .. string.rep(vim.api.nvim_replace_termcodes('<Left>', true, false, true), 2), 'n', false)
+end)
+
 
 
 -- Window navigation remaps
