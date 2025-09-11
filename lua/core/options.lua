@@ -149,6 +149,10 @@ vim.filetype.add({
   pattern = {
     [".*%.component%.html"] = "htmlangular",
   },
+  extension = {
+    ["heex"] = "heex",
+    ["html.heex"] = "heex",
+  },
 })
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
@@ -180,6 +184,9 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 
 -- luasnip setup
 local luasnip = require('luasnip')
+
+-- Load custom snippets
+luasnip.add_snippets("heex", require("snippets.heex"))
 function leave_snippet()
   if
       ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')

@@ -130,7 +130,7 @@ return {
       require('mason-lspconfig').setup({
         ensure_installed = {
           "ts_ls",
-          "lua_ls", "angularls", "cssls", "emmet_language_server", "zls",
+          "lua_ls", "angularls", "cssls", "emmet_language_server", "zls", "tailwindcss",
           "sqlls", "basedpyright", "elixirls"
         },
         handlers = {
@@ -178,8 +178,12 @@ return {
             })
           end,
           ["emmet_language_server"] = function()
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities.textDocument.completion.completionItem.snippetSupport = true
+            
             require("lspconfig").emmet_language_server.setup({
-              filetypes = { "html", "htmlangular", "css", "scss", "sass", "less" },
+              capabilities = capabilities,
+              filetypes = { "html", "htmlangular", "css", "scss", "sass", "less", "heex", "phoenix-heex" },
             })
           end,
           ["roslyn"] = function()
@@ -201,9 +205,21 @@ return {
               },
             })
           end,
+          ["tailwindcss"] = function()
+            require("lspconfig").tailwindcss.setup({
+              init_options = {
+                userLanguages = {
+                  elixir = "html-eex",
+                  eelixir = "html-eex",
+                  heex = "html-eex",
+                  phoenix_heex = "html-eex",
+                },
+              },
+            })
+          end,
           ["elixirls"] = function()
             require("lspconfig").elixirls.setup({
-              filetypes = { "elixir", "eelixir", "heex", "surface" },
+              filetypes = { "elixir", "eelixir", "heex", "phoenix-heex", "surface" },
             })
           end,
         }
