@@ -129,9 +129,8 @@ return {
 
       require('mason-lspconfig').setup({
         ensure_installed = {
-          "ts_ls",
-          "lua_ls", "angularls", "cssls", "emmet_language_server", "zls", "tailwindcss",
-          "sqlls", "basedpyright", "elixirls"
+          "lua_ls", "emmet_language_server","tailwindcss",
+          "sqlls", "elixirls"
         },
         handlers = {
           -- this first function is the "default handler"
@@ -140,69 +139,9 @@ return {
             require('lspconfig')[server_name].setup({
             })
           end,
-          ["zls"] = function()
-            require("lspconfig").zls.setup({
-              settings = {
-                zls = {
-                  enable_autofix = false,
-                  line_break_length = 80,
-                  format_on_save = false,
-                },
-              },
-            })
-          end,
-          ["angularls"] = function()
-            require("lspconfig").angularls.setup({
-              filetypes = { "typescript", "html", "htmlangular" },
-              root_dir = require("lspconfig.util").root_pattern("angular.json", "project.json", "package.json"),
-            })
-          end,
-          ["ts_ls"] = function()
-            require("lspconfig").ts_ls.setup({
-              filetypes = { "typescript" },
-              root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", ".git"),
-              on_attach = function(client)
-                -- Only enable formatting
-                client.server_capabilities.definitionProvider = true
-                client.server_capabilities.referencesProvider = false
-                client.server_capabilities.hoverProvider = false
-                client.server_capabilities.renameProvider = false
-                -- ... disable everything except:
-                client.server_capabilities.documentFormattingProvider = true
-              end,
-            })
-          end,
-          ["cssls"] = function()
-            require("lspconfig").cssls.setup({
-              filetypes = { "css", "scss", "sass", "less" },
-            })
-          end,
           ["emmet_language_server"] = function()
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities.textDocument.completion.completionItem.snippetSupport = true
-            
             require("lspconfig").emmet_language_server.setup({
-              capabilities = capabilities,
               filetypes = { "html", "htmlangular", "css", "scss", "sass", "less", "heex", "phoenix-heex" },
-            })
-          end,
-          ["roslyn"] = function()
-            require('lspconfig').roslyn.setup({
-            })
-          end,
-          ["basedpyright"] = function()
-            require("lspconfig").basedpyright.setup({
-              root_dir = require("lspconfig.util").root_pattern("pyproject.toml", "setup.py", "setup.cfg",
-                "requirements.txt", ".git"),
-              settings = {
-                basedpyright = {
-                  autoImportCompletions = true,
-                  autoSearchPaths = true,
-                  diagnosticMode = "workspace",
-                  useLibraryCodeForTypes = true,
-                  typeCheckingMode = "basic",
-                },
-              },
             })
           end,
           ["tailwindcss"] = function()
