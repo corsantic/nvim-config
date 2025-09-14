@@ -19,7 +19,7 @@ vim.keymap.set({ "n", "x" }, '<leader>cc',
 vim.keymap.set('n', '<leader>fh', builtin.command_history, {})
 vim.keymap.set('n', '<leader>fg', builtin.git_status, {})
 vim.keymap.set('n', '<leader>gr', builtin.lsp_references, {})
-
+vim.keymap.set("n", "<leader>fx", builtin.resume, { noremap = true, silent = true, desc = "Resume" })
 
 -- tree
 vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>")
@@ -113,3 +113,21 @@ vim.keymap.set("n", "<leader>tr", ":Rest run<cr>")
 
 -- vimdadbot
 vim.keymap.set("n", "<leader>vd", ":DBUI<cr>")
+
+
+-- spectre
+vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").toggle()<CR>', {
+  desc = "Toggle Spectre"
+})
+
+vim.keymap.set('n', '<leader>sv', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+  desc = "Search current word"
+})
+
+vim.keymap.set('v', '<leader>sv', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+  desc = "Search current word"
+})
+
+vim.keymap.set('n', '<leader>sf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+  desc = "Search on current file"
+})
