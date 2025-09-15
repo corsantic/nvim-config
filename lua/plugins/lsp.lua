@@ -180,10 +180,29 @@ return {
           ["emmet_language_server"] = function()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             capabilities.textDocument.completion.completionItem.snippetSupport = true
-            
             require("lspconfig").emmet_language_server.setup({
-              capabilities = capabilities,
-              filetypes = { "html", "htmlangular", "css", "scss", "sass", "less", "heex", "phoenix-heex" },
+              filetypes = { "html", "htmlangular", "css", "scss", "sass", "less", "eelixir", "heex", "elixir" },
+            })
+          end,
+          ["tailwindcss"] = function()
+            require("lspconfig").tailwindcss.setup({
+              filetypes = { "html", "elixir", "eelixir", "heex" },
+              init_options = {
+                userLanguages = {
+                  elixir = "html-eex",
+                  eelixir = "html-eex",
+                  heex = "html-eex",
+                },
+              },
+              settings = {
+                tailwindCSS = {
+                  experimental = {
+                    classRegex = {
+                      'class[:]\\s*"([^"]*)"',
+                    },
+                  },
+                },
+              },
             })
           end,
           ["roslyn"] = function()
@@ -201,18 +220,6 @@ return {
                   diagnosticMode = "workspace",
                   useLibraryCodeForTypes = true,
                   typeCheckingMode = "basic",
-                },
-              },
-            })
-          end,
-          ["tailwindcss"] = function()
-            require("lspconfig").tailwindcss.setup({
-              init_options = {
-                userLanguages = {
-                  elixir = "html-eex",
-                  eelixir = "html-eex",
-                  heex = "html-eex",
-                  phoenix_heex = "html-eex",
                 },
               },
             })
