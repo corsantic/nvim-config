@@ -74,6 +74,9 @@ require("bufferline").setup {}
 
 -- telescope setup
 require("telescope").setup {
+  defaults = {
+    file_ignore_patterns = { "node_modules", "venv", "dist", "build" }
+  },
   extensions = {
     ["ui-select"] = {
       require("telescope.themes").get_dropdown {
@@ -212,15 +215,15 @@ vim.diagnostic.config({
 
 local dap = require "dap"
 dap.configurations.lua = {
-    {
-        type = 'nlua',
-        request = 'attach',
-        name = "Attach to running Neovim instance",
-    }
+  {
+    type = 'nlua',
+    request = 'attach',
+    name = "Attach to running Neovim instance",
+  }
 }
 
 dap.adapters.nlua = function(callback, config)
-    callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+  callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
 end
 
 vim.keymap.set('n', '<leader>db', require "dap".toggle_breakpoint, { noremap = true })
@@ -229,15 +232,20 @@ vim.keymap.set('n', '<leader>do', require "dap".step_over, { noremap = true })
 vim.keymap.set('n', '<leader>di', require "dap".step_into, { noremap = true })
 
 vim.keymap.set('n', '<leader>dl', function()
-    require "osv".launch({ port = 8086 })
+  require "osv".launch({ port = 8086 })
 end, { noremap = true })
 
 vim.keymap.set('n', '<leader>dw', function()
-    local widgets = require "dap.ui.widgets"
-    widgets.hover()
+  local widgets = require "dap.ui.widgets"
+  widgets.hover()
 end)
 
 vim.keymap.set('n', '<leader>df', function()
-    local widgets = require "dap.ui.widgets"
-    widgets.centered_float(widgets.frames)
+  local widgets = require "dap.ui.widgets"
+  widgets.centered_float(widgets.frames)
 end)
+
+
+-- autosession
+--
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
