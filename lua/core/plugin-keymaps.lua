@@ -112,7 +112,7 @@ vim.keymap.set("n", "<leader>tr", ":Rest run<cr>")
 
 
 -- vimdadbot
-vim.keymap.set("n", "<leader>vd", ":DBUI<cr>")
+vim.keymap.set("n", "<leader>vdb", ":DBUI<cr>")
 
 
 -- spectre
