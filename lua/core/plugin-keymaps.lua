@@ -18,7 +18,8 @@ vim.keymap.set({ "n", "x" }, '<leader>cc',
   function() require('telescope').extensions.neoclip.default(require('telescope.themes').get_dropdown()) end, {})
 vim.keymap.set('n', '<leader>fh', builtin.command_history, {})
 vim.keymap.set('n', '<leader>fg', builtin.git_status, {})
-vim.keymap.set('n', '<leader>gr', builtin.lsp_references, {})
+vim.keymap.set('n', '<leader>gr', builtin.lsp_references, { noremap = true, silent = true, desc = "References" })
+vim.keymap.set('n', '<leader>gd', builtin.lsp_definitions, { noremap = true, silent = true, desc = "Definitions" })
 vim.keymap.set("n", "<leader>fx", builtin.resume, { noremap = true, silent = true, desc = "Resume" })
 
 -- tree

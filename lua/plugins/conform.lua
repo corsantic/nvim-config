@@ -10,6 +10,7 @@ return {
       cs = { "csharpier" },
       python = { "black" },
       xml = { "xmlformatter" },
+      lua = { "stylua" },
     },
     formatters = {
       prettier = {

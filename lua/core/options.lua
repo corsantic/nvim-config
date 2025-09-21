@@ -98,6 +98,13 @@ require("telescope").setup {
         height = 0.5,
       },
     },
+    lsp_definitions = {
+      theme = "cursor",
+      layout_config = {
+        width = 0.8,
+        height = 0.5,
+      },
+    },
     buffers = {
       theme = "ivy",
       sort_lastused = true,
