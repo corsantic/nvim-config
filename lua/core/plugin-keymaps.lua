@@ -154,6 +154,6 @@ require("gitsigns").setup({
 			vim.keymap.set(mode, l, r, opts)
 		end
 		map("n", "<leader>gp", gitsigns.preview_hunk)
-		map("n", "<leader>gi", gitsigns.preview_hunk_inline)
+		map("n", "<leader>g[", gitsigns.preview_hunk_inline)
 	end,
 })
