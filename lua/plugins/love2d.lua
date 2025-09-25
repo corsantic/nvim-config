@@ -4,9 +4,9 @@ return {
 	event = "VeryLazy",
 	version = "2.*",
 	opts = {
-		debug_window_opts = {
-			split = "below",
-		},
+		-- debug_window_opts = {
+		-- 	split = "below",
+		-- },
 	},
 	keys = {
 		{ "<leader>v", ft = "lua", desc = "LÖVE" },
