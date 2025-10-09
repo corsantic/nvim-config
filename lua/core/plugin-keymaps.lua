@@ -157,3 +157,16 @@ require("gitsigns").setup({
 		map("n", "<leader>g[", gitsigns.preview_hunk_inline)
 	end,
 })
+
+-- noice
+vim.keymap.set("n", "<leader>nl", function()
+	require("noice").cmd("last")
+end)
+
+vim.keymap.set("n", "<leader>nh", function()
+	require("noice").cmd("history")
+end)
+
+vim.keymap.set("n", "<leader>nd", function()
+	require("noice").cmd("dismiss")
+end)
