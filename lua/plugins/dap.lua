@@ -1,10 +1,26 @@
 return {
-  "mfussenegger/nvim-dap",
-  dependencies = {
-    "jbyuki/one-small-step-for-vimkind",
-  },
-  lazy = false,
-  config = function()
-    -- Put the suggested configuration here
-  end,
+	"mfussenegger/nvim-dap",
+	dependencies = {
+		"jbyuki/one-small-step-for-vimkind",
+		"nvim-neotest/nvim-nio",
+		"rcarriga/nvim-dap-ui",
+	},
+	event = "VeryLazy",
+	config = function()
+		require("dapui").setup({
+			icons = { expanded = "▾", collapsed = "▸" },
+			layouts = {
+				{
+					elements = {
+						{ id = "scopes", size = 0.25 },
+						"breakpoints",
+						"stacks",
+						"watches",
+					},
+					size = 10, -- columns
+					position = "bottom",
+				},
+			},
+		})
+	end,
 }
