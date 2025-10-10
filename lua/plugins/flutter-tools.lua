@@ -28,15 +28,17 @@ return {
 				run_via_dap = true,
 				exception_breakpoints = {},
 				register_configurations = function(paths)
-					local dap = require("dap")
-					-- See also: https://github.com/akinsho/flutter-tools.nvim/pull/292
-					dap.adapters.dart = {
-						type = "executable",
-						command = paths.flutter_bin,
-						args = { "debug-adapter" },
+					require("dap").configurations.dart = {
+						{
+							type = "dart",
+							request = "launch",
+							name = "Launch flutter",
+							dartSdkPath = paths.dart_sdk,
+							flutterSdkPath = paths.flutter_sdk,
+							program = "${workspaceFolder}/lib/main.dart",
+							cwd = "${workspaceFolder}",
+						}
 					}
-					dap.configurations.dart = {}
-					require("dap.ext.vscode").load_launchjs()
 				end,
 			},
 		})
