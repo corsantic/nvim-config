@@ -27,9 +27,20 @@ return {
 			},
 			dev_log = {
 				enabled = true,
-				filter = nil, -- optional callback to filter the log
-				-- takes a log_line as string argument; returns a boolean or nil;
-				-- the log_line is only added to the output if the function returns true
+				filter = function(log_line)
+					-- Filter out EGL_emulation and other noisy Android emulator logs
+					if log_line:match("EGL_emulation") then
+						return false
+					end
+					if log_line:match("eglCodecCommon") then
+						return false
+					end
+					if log_line:match("app_time_stats") then
+						return false
+					end
+					-- Allow all other logs
+					return true
+				end,
 				notify_errors = true, -- if there is an error whilst running then notify the user
 				open_cmd = "botright 15split", -- command to use to open the log buffer
 				focus_on_open = false, -- focus on the newly opened log window
