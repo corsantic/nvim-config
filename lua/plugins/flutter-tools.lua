@@ -4,6 +4,8 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"stevearc/dressing.nvim",
+		"mfussenegger/nvim-dap",
+		"rcarriga/nvim-dap-ui",
 	},
 	config = function()
 		require("flutter-tools").setup({
@@ -23,6 +25,23 @@ return {
 					enablesnippets = false,
 				},
 			},
+			dev_log = {
+				enabled = true,
+				filter = nil, -- optional callback to filter the log
+				-- takes a log_line as string argument; returns a boolean or nil;
+				-- the log_line is only added to the output if the function returns true
+				notify_errors = true, -- if there is an error whilst running then notify the user
+				open_cmd = "botright 15split", -- command to use to open the log buffer
+				focus_on_open = false, -- focus on the newly opened log window
+			},
+			closing_tags = {
+				highlight = "ErrorMsg", -- highlight for the closing tag
+				prefix = ">", -- character to use for close tag e.g. > Widget
+				priority = 10, -- priority of virtual text in current line
+				-- consider to configure this when there is a possibility of multiple virtual text items in one line
+				-- see `priority` option in |:help nvim_buf_set_extmark| for more info
+				enabled = true, -- set to false to disable
+			},
 			debugger = {
 				enabled = true,
 				run_via_dap = true,
@@ -37,7 +56,17 @@ return {
 							flutterSdkPath = paths.flutter_sdk,
 							program = "${workspaceFolder}/lib/main.dart",
 							cwd = "${workspaceFolder}",
-						}
+							console = "debugConsole",
+							-- Enable ANSI colors in console output
+							additionalOptions = {
+								["--color"] = true,
+							},
+							-- Force color output
+							env = {
+								CLICOLOR_FORCE = "1",
+								TERM = "xterm-256color",
+							},
+						},
 					}
 				end,
 			},

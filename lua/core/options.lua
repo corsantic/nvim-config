@@ -229,6 +229,19 @@ dap.adapters.nlua = function(callback, config)
 	callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
 end
 
+local dapui = require("dapui")
+dap.listeners.before.attach.dapui_config = function()
+	dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+	dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+	dapui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+	dapui.close()
+end
 vim.keymap.set("n", "<leader>db", require("dap").toggle_breakpoint, { noremap = true })
 vim.keymap.set("n", "<leader>dc", require("dap").continue, { noremap = true })
 vim.keymap.set("n", "<leader>do", require("dap").step_over, { noremap = true })
@@ -251,6 +264,10 @@ end)
 -- autosession
 --
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
+require("notify").setup({
+	background_colour = "#000000",
+})
 
 require("notify").setup({
 	background_colour = "#000000",

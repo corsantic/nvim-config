@@ -11,15 +11,27 @@ return {
 			icons = { expanded = "▾", collapsed = "▸" },
 			layouts = {
 				{
-					elements = {
-						{ id = "scopes", size = 0.25 },
-						"breakpoints",
-						"stacks",
-						"watches",
-					},
-					size = 10, -- columns
-					position = "bottom",
+					elements = { "scopes", "breakpoints", "stacks", "watches" },
+					size = 40,
+					position = "left",
 				},
+			},
+			controls = {
+				element = "repl",
+				enabled = true,
+			},
+			element_mappings = {},
+			expand_lines = true,
+			floating = {
+				border = "single",
+				mappings = {
+					close = { "q", "<Esc>" },
+				},
+			},
+			force_buffers = true,
+			render = {
+				indent = 1,
+				max_value_lines = 100,
 			},
 		})
 	end,
