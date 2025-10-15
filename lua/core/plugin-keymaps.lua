@@ -14,7 +14,7 @@ vim.keymap.set("n", "<leader>fd", function()
 end, {})
 vim.keymap.set("n", "<leader>fad", function()
 	builtin.diagnostics({
-		severity= vim.diagnostic.severity.ERROR,
+		severity = vim.diagnostic.severity.ERROR,
 	})
 end, {})
 -- it was not working in options. TODO: check this and configure it in options.lua for dropdown
@@ -174,3 +174,26 @@ end)
 vim.keymap.set("n", "<leader>nd", function()
 	require("noice").cmd("dismiss")
 end)
+
+-- smart-split
+--
+-- recommended mappings
+-- resizing splits
+-- these keymaps will also accept a range,
+-- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
+local smart_split = require("smart-splits")
+vim.keymap.set("n", "<C-A-h>", smart_split.resize_left)
+vim.keymap.set("n", "<F8>", smart_split.resize_down)
+vim.keymap.set("n", "<F9>", smart_split.resize_up)
+vim.keymap.set("n", "<C-A-l>", smart_split.resize_right)
+-- moving between splits
+vim.keymap.set("n", "<C-h>", smart_split.move_cursor_left)
+vim.keymap.set("n", "<C-j>", smart_split.move_cursor_down)
+vim.keymap.set("n", "<C-k>", smart_split.move_cursor_up)
+vim.keymap.set("n", "<C-l>", smart_split.move_cursor_right)
+vim.keymap.set("n", "<C-\\>", smart_split.move_cursor_previous)
+-- swapping buffers between windows
+vim.keymap.set("n", "<leader><leader>h", smart_split.swap_buf_left)
+vim.keymap.set("n", "<leader><leader>j", smart_split.swap_buf_down)
+vim.keymap.set("n", "<leader><leader>k", smart_split.swap_buf_up)
+vim.keymap.set("n", "<leader><leader>l", smart_split.swap_buf_right)
