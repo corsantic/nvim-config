@@ -1,40 +1,40 @@
 -- telescope
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>fs", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fp", builtin.git_files, {})
-vim.keymap.set("n", "<leader>fz", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>fr", builtin.grep_string, {})
-vim.keymap.set("n", "<leader>ff", builtin.current_buffer_fuzzy_find, {})
+vim.keymap.set("n", "<leader>fs", builtin.find_files, { desc = "Find files" })
+vim.keymap.set("n", "<leader>fp", builtin.git_files, { desc = "Find git files" })
+vim.keymap.set("n", "<leader>fz", builtin.live_grep, { desc = "Live grep" })
+vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Old files" })
+vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fr", builtin.grep_string, { desc = "Grep string" })
+vim.keymap.set("n", "<leader>ff", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy find in buffer" })
 vim.keymap.set("n", "<leader>fd", function()
 	builtin.diagnostics({
 		bufnr = 0,
 	})
-end, {})
+end, { desc = "Buffer diagnostics" })
 vim.keymap.set("n", "<leader>fad", function()
 	builtin.diagnostics({
 		severity = vim.diagnostic.severity.ERROR,
 	})
-end, {})
+end, { desc = "All diagnostics (errors)" })
 -- it was not working in options. TODO: check this and configure it in options.lua for dropdown
 vim.keymap.set({ "n", "x" }, "<leader>cc", function()
 	require("telescope").extensions.neoclip.default(require("telescope.themes").get_dropdown())
-end, {})
-vim.keymap.set("n", "<leader>fh", builtin.command_history, {})
-vim.keymap.set("n", "<leader>fg", builtin.git_status, {})
+end, { desc = "Clipboard history" })
+vim.keymap.set("n", "<leader>fh", builtin.command_history, { desc = "Command history" })
+vim.keymap.set("n", "<leader>fg", builtin.git_status, { desc = "Git status" })
 vim.keymap.set("n", "<leader>gr", builtin.lsp_references, { noremap = true, silent = true, desc = "References" })
 vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, { noremap = true, silent = true, desc = "Definitions" })
 vim.keymap.set("n", "<leader>fx", builtin.resume, { noremap = true, silent = true, desc = "Resume" })
-
+vim.keymap.set("n", "<leader>?", builtin.keymaps, { noremap = true, silent = true, desc = "Keymaps" })
 -- tree
-vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>")
+vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>", { desc = "Toggle file tree" })
 
 -- markview
-vim.keymap.set("n", "<leader>mv", ":Markview<cr>")
+vim.keymap.set("n", "<leader>mv", ":Markview<cr>", { desc = "Toggle Markview" })
 
 -- nvim comment toggle
-vim.keymap.set({ "n", "v" }, "<leader>/", ":CommentToggle<cr>")
+vim.keymap.set({ "n", "v" }, "<leader>/", ":CommentToggle<cr>", { desc = "Toggle comment" })
 
 -- format code using LSP
 -- vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format)
@@ -47,7 +47,7 @@ vim.keymap.set("n", "<leader>fm", function()
 end, { desc = "Format with Conform or LSP" })
 
 -- fugitive
-vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Fugitive" })
 
 -- harpoon
 local harpoon = require("harpoon")
@@ -58,31 +58,31 @@ harpoon:setup()
 
 vim.keymap.set("n", "<leader>a", function()
 	harpoon:list():add()
-end)
+end, { desc = "Harpoon Add" })
 vim.keymap.set("n", "<C-e>", function()
 	harpoon.ui:toggle_quick_menu(harpoon:list())
-end)
+end, { desc = "Harpoon UI" })
 
 vim.keymap.set("n", "<leader>1", function()
 	harpoon:list():select(1)
-end)
+end, { desc = "Harpoon 1" })
 vim.keymap.set("n", "<leader>2", function()
 	harpoon:list():select(2)
-end)
+end, { desc = "Harpoon 2" })
 vim.keymap.set("n", "<leader>3", function()
 	harpoon:list():select(3)
-end)
+end, { desc = "Harpoon 3" })
 vim.keymap.set("n", "<leader>4", function()
 	harpoon:list():select(4)
-end)
+end, { desc = "Harpoon 4" })
 
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<leader>hp", function()
 	harpoon:list():prev()
-end)
+end, { desc = "Harpoon previous" })
 vim.keymap.set("n", "<leader>hn", function()
 	harpoon:list():next()
-end)
+end, { desc = "Harpoon next" })
 
 -- Copilot
 -- vim.g.copilot_no_tab_map = true
@@ -96,38 +96,38 @@ local hop = require("hop")
 local directions = require("hop.hint").HintDirection
 vim.keymap.set("", "f", function()
 	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-end, { remap = true })
+end, { remap = true, desc = "Hop forward to char" })
 vim.keymap.set("", "F", function()
 	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-end, { remap = true })
+end, { remap = true, desc = "Hop backward to char" })
 vim.keymap.set("", "t", function()
 	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, { remap = true })
+end, { remap = true, desc = "Hop forward till char" })
 vim.keymap.set("", "T", function()
 	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-end, { remap = true })
+end, { remap = true, desc = "Hop backward till char" })
 
 -- refactoring
-vim.keymap.set("x", "<leader>re", ":Refactor extract ")
-vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ")
+vim.keymap.set("x", "<leader>re", ":Refactor extract ", { desc = "Refactor extract" })
+vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ", { desc = "Refactor extract to file" })
 
-vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ")
+vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ", { desc = "Refactor extract variable" })
 
-vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var")
+vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var", { desc = "Refactor inline variable" })
 
-vim.keymap.set({ "n", "x" }, "<leader>rI", ":Refactor inline_func")
+vim.keymap.set({ "n", "x" }, "<leader>rI", ":Refactor inline_func", { desc = "Refactor inline function" })
 
-vim.keymap.set({ "n", "x" }, "<leader>rb", ":Refactor extract_block")
-vim.keymap.set({ "n", "x" }, "<leader>rbf", ":Refactor extract_block_to_file")
+vim.keymap.set({ "n", "x" }, "<leader>rb", ":Refactor extract_block", { desc = "Refactor extract block" })
+vim.keymap.set({ "n", "x" }, "<leader>rbf", ":Refactor extract_block_to_file", { desc = "Refactor extract block to file" })
 
 -- vim bbye
-vim.keymap.set("n", "<leader>q", ":Bdelete<cr>")
+vim.keymap.set("n", "<leader>q", ":Bdelete<cr>", { desc = "Delete buffer" })
 
 -- rest-nvim
-vim.keymap.set("n", "<leader>tr", ":Rest run<cr>")
+vim.keymap.set("n", "<leader>tr", ":Rest run<cr>", { desc = "Run REST request" })
 
 -- vimdadbot
-vim.keymap.set("n", "<leader>vdb", ":DBUI<cr>")
+vim.keymap.set("n", "<leader>vdb", ":DBUI<cr>", { desc = "Open database UI" })
 
 -- spectre
 vim.keymap.set("n", "<leader>sp", '<cmd>lua require("spectre").toggle()<CR>', {
@@ -157,23 +157,23 @@ require("gitsigns").setup({
 			opts.buffer = bufnr
 			vim.keymap.set(mode, l, r, opts)
 		end
-		map("n", "<leader>gp", gitsigns.preview_hunk)
-		map("n", "<leader>g[", gitsigns.preview_hunk_inline)
+		map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview git hunk" })
+		map("n", "<leader>g[", gitsigns.preview_hunk_inline, { desc = "Preview git hunk inline" })
 	end,
 })
 
 -- noice
 vim.keymap.set("n", "<leader>nl", function()
 	require("noice").cmd("last")
-end)
+end, { desc = "Noice last message" })
 
 vim.keymap.set("n", "<leader>nh", function()
 	require("noice").cmd("history")
-end)
+end, { desc = "Noice message history" })
 
 vim.keymap.set("n", "<leader>nd", function()
 	require("noice").cmd("dismiss")
-end)
+end, { desc = "Noice dismiss messages" })
 
 -- smart-split
 --
@@ -182,18 +182,18 @@ end)
 -- these keymaps will also accept a range,
 -- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
 local smart_split = require("smart-splits")
-vim.keymap.set("n", "<C-A-h>", smart_split.resize_left)
-vim.keymap.set("n", "<F8>", smart_split.resize_down)
-vim.keymap.set("n", "<F9>", smart_split.resize_up)
-vim.keymap.set("n", "<C-A-l>", smart_split.resize_right)
+vim.keymap.set("n", "<C-A-h>", smart_split.resize_left, { desc = "Resize split left" })
+vim.keymap.set("n", "<F8>", smart_split.resize_down, { desc = "Resize split down" })
+vim.keymap.set("n", "<F9>", smart_split.resize_up, { desc = "Resize split up" })
+vim.keymap.set("n", "<C-A-l>", smart_split.resize_right, { desc = "Resize split right" })
 -- moving between splits
-vim.keymap.set("n", "<C-h>", smart_split.move_cursor_left)
-vim.keymap.set("n", "<C-j>", smart_split.move_cursor_down)
-vim.keymap.set("n", "<C-k>", smart_split.move_cursor_up)
-vim.keymap.set("n", "<C-l>", smart_split.move_cursor_right)
-vim.keymap.set("n", "<C-\\>", smart_split.move_cursor_previous)
+vim.keymap.set("n", "<C-h>", smart_split.move_cursor_left, { desc = "Move to left split" })
+vim.keymap.set("n", "<C-j>", smart_split.move_cursor_down, { desc = "Move to split below" })
+vim.keymap.set("n", "<C-k>", smart_split.move_cursor_up, { desc = "Move to split above" })
+vim.keymap.set("n", "<C-l>", smart_split.move_cursor_right, { desc = "Move to right split" })
+vim.keymap.set("n", "<C-\\>", smart_split.move_cursor_previous, { desc = "Move to previous split" })
 -- swapping buffers between windows
-vim.keymap.set("n", "<leader><leader>h", smart_split.swap_buf_left)
-vim.keymap.set("n", "<leader><leader>j", smart_split.swap_buf_down)
-vim.keymap.set("n", "<leader><leader>k", smart_split.swap_buf_up)
-vim.keymap.set("n", "<leader><leader>l", smart_split.swap_buf_right)
+vim.keymap.set("n", "<leader><leader>h", smart_split.swap_buf_left, { desc = "Swap buffer left" })
+vim.keymap.set("n", "<leader><leader>j", smart_split.swap_buf_down, { desc = "Swap buffer down" })
+vim.keymap.set("n", "<leader><leader>k", smart_split.swap_buf_up, { desc = "Swap buffer up" })
+vim.keymap.set("n", "<leader><leader>l", smart_split.swap_buf_right, { desc = "Swap buffer right" })
