@@ -45,5 +45,18 @@ return {
         }
       }
     })
+
+    -- Remove ^M characters from Codeium completions
+    local cmp = require("cmp")
+    local source = cmp.get_config().sources
+    for _, s in ipairs(source) do
+      if s.name == "codeium" then
+        s.entry_filter = function(entry)
+          local completion_text = entry:get_completion_item().label or ""
+          entry:get_completion_item().label = completion_text:gsub('\r', '')
+          return true
+        end
+      end
+    end
   end
 }
