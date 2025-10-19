@@ -36,12 +36,12 @@ return {
 
       cmp.setup({
         sources = {
-          { name = 'nvim_lsp' },
-          { name = 'vim-dadbod-completion' },
-          { name = 'luasnip' }, -- For luasnip users.
-          { name = 'buffer' },  -- For buffer words.
-          { name = 'path' },    -- For file paths.
-          { name = 'codeium' }
+          { name = 'nvim_lsp', priority = 1000 },
+          { name = 'vim-dadbod-completion', priority = 700 },
+          { name = 'luasnip', priority = 750 }, -- For luasnip users.
+          { name = 'codeium', priority = 500 },
+          { name = 'buffer', priority = 500 },  -- For buffer words.
+          { name = 'path', priority = 300 },    -- For file paths.
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
