@@ -119,7 +119,6 @@ require("telescope").setup({
 	},
 })
 require("telescope").load_extension("ui-select")
-require("telescope").load_extension("rest")
 require("telescope").load_extension("neoclip")
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 	pattern = "*.py",
