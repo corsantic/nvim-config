@@ -29,6 +29,9 @@ return {
       "L3MON4D3/LuaSnip",
       "hrsh7th/cmp-nvim-lsp",
       "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-buffer",
     },
     config = function()
       local cmp = require('cmp')
@@ -72,6 +75,24 @@ return {
             luasnip.lsp_expand(args.body)
           end,
         },
+      })
+
+      -- Cmdline completion for `/` (search)
+      cmp.setup.cmdline('/', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+
+      -- Cmdline completion for `:` (commands)
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+          { name = 'cmdline' }
+        })
       })
     end
   },
