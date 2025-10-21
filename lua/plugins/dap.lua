@@ -40,7 +40,21 @@ return {
 				name = "launch - netcoredbg",
 				request = "launch",
 				program = function()
-					return vim.fn.input("Path to dll", vim.fn.getcwd() .. "/bin/Debug/", "file")
+					local co = coroutine.running()
+					require("telescope.builtin").find_files({
+						prompt_title = "Select DLL",
+						cwd = vim.fn.getcwd() .. "/bin/Debug",
+						attach_mappings = function(prompt_bufnr, map)
+							local actions = require("telescope.actions")
+							actions.select_default:replace(function()
+								actions.close(prompt_bufnr)
+								local selection = require("telescope.actions.state").get_selected_entry()
+								coroutine.resume(co, selection.path)
+							end)
+							return true
+						end,
+					})
+					return coroutine.yield()
 				end,
 				env = function()
 					-- Try to read launchSettings.json
