@@ -40,6 +40,15 @@ return {
 				name = "launch - netcoredbg",
 				request = "launch",
 				program = function()
+					-- Auto-build before debugging
+					print("Building project...")
+					local build_result = vim.fn.system("dotnet build")
+					if vim.v.shell_error ~= 0 then
+						print("Build failed:\n" .. build_result)
+						return nil
+					end
+					print("Build successful!")
+
 					local co = coroutine.running()
 					require("telescope.builtin").find_files({
 						prompt_title = "Select DLL",
