@@ -33,6 +33,10 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
+   -- Available values:   `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`,
+   --  `'espresso'`
+   --  Default value:      `'default'
+      vim.g.sonokai_style = "shusia"
 			vim.cmd("colorscheme sonokai")
 		end,
 	},
