@@ -149,7 +149,7 @@ require('kanagawa').setup({
 -- default options
 require('onedark').setup {
   -- Main options --
-  style = 'warmer',                 -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+  style = 'dark',                 -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
   transparent = true,            -- Show/hide background
   term_colors = true,             -- Change terminal color as per the selected theme style
   ending_tildes = false,          -- Show the end-of-buffer tildes. By default they are hidden
@@ -186,7 +186,10 @@ require('onedark').setup {
     background = true,     -- use background color for virtual text
   },
 }
-vim.cmd("colorscheme onedark")
+-- vim.cmd("colorscheme onedark")
+-- vim.cmd("colorscheme tokyonight")
+vim.cmd("colorscheme sonokai")
+-- vim.cmd("colorscheme gruvbox-material")
 -- vim.cmd("colorscheme kanagawa")
 
 -- vim.cmd("colorscheme rose-pine-main")
