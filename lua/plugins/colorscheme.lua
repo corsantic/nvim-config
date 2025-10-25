@@ -36,7 +36,7 @@ return {
    -- Available values:   `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`,
    --  `'espresso'`
    --  Default value:      `'default'
-      vim.g.sonokai_style = "shusia"
+      vim.g.sonokai_style = "default"
 			vim.cmd("colorscheme sonokai")
 		end,
 	},
