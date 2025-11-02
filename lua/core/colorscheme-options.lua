@@ -186,8 +186,10 @@ require('onedark').setup {
     background = true,     -- use background color for virtual text
   },
 }
+
+
 -- vim.cmd("colorscheme onedark")
--- vim.cmd("colorscheme tokyonight")
+-- vim.cmd("colorscheme tokyonight-night")
 vim.cmd("colorscheme sonokai")
 -- vim.cmd("colorscheme gruvbox-material")
 -- vim.cmd("colorscheme kanagawa")

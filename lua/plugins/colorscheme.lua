@@ -2,6 +2,12 @@ return {
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{
 		"luisiacc/gruvbox-baby",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.opt.background = "dark"
+      vim.cmd.colorscheme("gruvbox-baby")
+    end,
 	},
 	{ "rebelot/kanagawa.nvim" },
 	{
