@@ -32,6 +32,9 @@ return {
 					if log_line:match("EGL_emulation") then
 						return false
 					end
+					if log_line:match("gralloc") then
+						return false
+					end
 					if log_line:match("eglCodecCommon") then
 						return false
 					end
