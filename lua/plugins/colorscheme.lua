@@ -2,6 +2,7 @@ return {
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{
 		"luisiacc/gruvbox-baby",
+<<<<<<< HEAD
     lazy = false,
     priority = 1000,
     config = function()
@@ -19,6 +20,11 @@ return {
 		end,
 	},
 	{
+=======
+	},
+	{ "rebelot/kanagawa.nvim" },
+	{
+>>>>>>> 6561556 (.)
 		"rose-pine/neovim",
 		name = "rose-pine",
 		config = function()
@@ -26,6 +32,7 @@ return {
 		end,
 	},
 	{
+<<<<<<< HEAD
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
@@ -52,6 +59,17 @@ return {
 		priority = 1000,
 		config = function()
 			vim.cmd("colorscheme gruvbox-material")
+=======
+		"neanias/everforest-nvim",
+		version = false,
+		lazy = false,
+		priority = 1000, -- make sure to load this before all the other start plugins
+		-- Optional; default configuration will be used if setup isn't called.
+		config = function()
+			require("everforest").setup({
+				-- Your config here
+			})
+>>>>>>> 6561556 (.)
 		end,
 	},
 	{
