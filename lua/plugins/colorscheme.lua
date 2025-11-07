@@ -2,13 +2,12 @@ return {
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{
 		"luisiacc/gruvbox-baby",
-<<<<<<< HEAD
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.opt.background = "dark"
-      vim.cmd.colorscheme("gruvbox-baby")
-    end,
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.opt.background = "dark"
+			vim.cmd.colorscheme("gruvbox-baby")
+		end,
 	},
 	{ "rebelot/kanagawa.nvim" },
 	{
@@ -20,11 +19,6 @@ return {
 		end,
 	},
 	{
-=======
-	},
-	{ "rebelot/kanagawa.nvim" },
-	{
->>>>>>> 6561556 (.)
 		"rose-pine/neovim",
 		name = "rose-pine",
 		config = function()
@@ -32,7 +26,6 @@ return {
 		end,
 	},
 	{
-<<<<<<< HEAD
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
@@ -46,10 +39,10 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
-   -- Available values:   `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`,
-   --  `'espresso'`
-   --  Default value:      `'default'
-      vim.g.sonokai_style = "default"
+			-- Available values:   `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`,
+			--  `'espresso'`
+			--  Default value:      `'default'
+			vim.g.sonokai_style = "default"
 			vim.cmd("colorscheme sonokai")
 		end,
 	},
@@ -59,7 +52,9 @@ return {
 		priority = 1000,
 		config = function()
 			vim.cmd("colorscheme gruvbox-material")
-=======
+		end,
+	},
+	{
 		"neanias/everforest-nvim",
 		version = false,
 		lazy = false,
@@ -69,7 +64,6 @@ return {
 			require("everforest").setup({
 				-- Your config here
 			})
->>>>>>> 6561556 (.)
 		end,
 	},
 	{
