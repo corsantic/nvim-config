@@ -29,6 +29,22 @@ return {
 			end
 		end
 
+		-- Handle DAP errors gracefully to prevent crashes
+		dap.listeners.after.event_output["dap_error_handler"] = function(session, body)
+			if body.category == "stderr" then
+				vim.schedule(function()
+					vim.notify("DAP stderr: " .. (body.output or ""), vim.log.levels.WARN)
+				end)
+			end
+		end
+
+		-- Prevent crash on adapter disconnect
+		dap.listeners.after.disconnect["dap_disconnect_handler"] = function()
+			vim.schedule(function()
+				vim.notify("DAP disconnected", vim.log.levels.INFO)
+			end)
+		end
+
 		-- Keybinding to toggle DAP UI
 		vim.keymap.set("n", "<leader>du", function()
 			require("dapui").toggle()
@@ -44,12 +60,19 @@ return {
 					print("Building project...")
 					local build_result = vim.fn.system("dotnet build")
 					if vim.v.shell_error ~= 0 then
-						print("Build failed:\n" .. build_result)
-						return nil
+						vim.schedule(function()
+							vim.notify("Build failed:\n" .. build_result, vim.log.levels.ERROR)
+						end)
+						return dap.ABORT
 					end
 					print("Build successful!")
 
 					local co = coroutine.running()
+					if not co then
+						vim.notify("Cannot run outside of coroutine", vim.log.levels.ERROR)
+						return dap.ABORT
+					end
+
 					require("telescope.builtin").find_files({
 						prompt_title = "Select DLL",
 						cwd = vim.fn.getcwd() .. "/bin/Debug",
@@ -58,12 +81,30 @@ return {
 							actions.select_default:replace(function()
 								actions.close(prompt_bufnr)
 								local selection = require("telescope.actions.state").get_selected_entry()
-								coroutine.resume(co, selection.path)
+								if selection and selection.path then
+									coroutine.resume(co, selection.path)
+								else
+									coroutine.resume(co, dap.ABORT)
+								end
+							end)
+							-- Handle cancellation (Escape key)
+							map("i", "<Esc>", function()
+								actions.close(prompt_bufnr)
+								coroutine.resume(co, dap.ABORT)
+							end)
+							map("n", "<Esc>", function()
+								actions.close(prompt_bufnr)
+								coroutine.resume(co, dap.ABORT)
 							end)
 							return true
 						end,
 					})
-					return coroutine.yield()
+
+					local result = coroutine.yield()
+					if result == dap.ABORT then
+						vim.notify("Debugging cancelled", vim.log.levels.INFO)
+					end
+					return result
 				end,
 				env = function()
 					-- Try to read launchSettings.json
