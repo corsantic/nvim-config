@@ -10,6 +10,9 @@ return {
 	config = function()
 		local dap = require("dap")
 
+		-- Enable detailed DAP logging
+		dap.set_log_level('TRACE')
+
 		-- .NET/C# configuration using netcoredbg ARM64
 		dap.adapters.coreclr = {
 			type = "executable",
@@ -55,10 +58,19 @@ return {
 				type = "coreclr",
 				name = "launch - netcoredbg",
 				request = "launch",
+				justMyCode = true,
+				enableStepFiltering = true,
+				stopAtEntry = false,
+				logging = {
+					moduleLoad = false,
+					engineLogging = false,
+					browserStdOut = false,
+				},
+				timeout = 10000,
 				program = function()
 					-- Auto-build before debugging
 					print("Building project...")
-					local build_result = vim.fn.system("dotnet build")
+					local build_result = vim.fn.system("dotnet build --configuration:Debug")
 					if vim.v.shell_error ~= 0 then
 						vim.schedule(function()
 							vim.notify("Build failed:\n" .. build_result, vim.log.levels.ERROR)

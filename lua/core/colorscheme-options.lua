@@ -184,7 +184,7 @@ require("onedark").setup({
 })
 
 require("everforest").setup({
-	background = "hard",
+	background = "medium",
 	transparent_background_level = 1,
 	inlay_hints_background = "dimmed",
 })
