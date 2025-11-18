@@ -230,17 +230,21 @@ dap.adapters.nlua = function(callback, config)
 end
 
 local dapui = require("dapui")
-dap.listeners.before.attach.dapui_config = function()
-	dapui.open()
+
+dap.listeners.after.attach.dapui_config = function()
+  pcall(dapui.open)
 end
-dap.listeners.before.launch.dapui_config = function()
-	dapui.open()
+
+dap.listeners.after.launch.dapui_config = function()
+  pcall(dapui.open)
 end
+
 dap.listeners.before.event_terminated.dapui_config = function()
-	dapui.close()
+  pcall(dapui.close)
 end
+
 dap.listeners.before.event_exited.dapui_config = function()
-	dapui.close()
+  pcall(dapui.close)
 end
 vim.keymap.set("n", "<leader>db", require("dap").toggle_breakpoint, { noremap = true })
 vim.keymap.set("n", "<leader>dc", require("dap").continue, { noremap = true })
