@@ -231,12 +231,8 @@ end
 
 local dapui = require("dapui")
 
-dap.listeners.after.attach.dapui_config = function()
-  pcall(dapui.open)
-end
-
-dap.listeners.after.launch.dapui_config = function()
-  pcall(dapui.open)
+dap.listeners.after.event_initialized.dapui_config = function()
+  pcall(function() dapui.open() end)
 end
 
 dap.listeners.before.event_terminated.dapui_config = function()

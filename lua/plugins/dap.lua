@@ -11,7 +11,7 @@ return {
 		local dap = require("dap")
 
 		-- Enable detailed DAP logging
-		dap.set_log_level('TRACE')
+		dap.set_log_level("TRACE")
 
 		-- .NET/C# configuration using netcoredbg ARM64
 		dap.adapters.coreclr = {
@@ -33,14 +33,24 @@ return {
 		end
 
 		-- Handle DAP errors gracefully to prevent crashes
+		local notify = vim.notify
+		local throttle = false
+
 		dap.listeners.after.event_output["dap_error_handler"] = function(session, body)
 			if body.category == "stderr" then
-				vim.schedule(function()
-					vim.notify("DAP stderr: " .. (body.output or ""), vim.log.levels.WARN)
-				end)
+				if not throttle then
+					throttle = true
+					vim.schedule(function()
+						pcall(function()
+							notify("DAP stderr: " .. (body.output or ""), vim.log.levels.WARN)
+						end)
+						vim.defer_fn(function()
+							throttle = false
+						end, 100) -- 100ms cooldown
+					end)
+				end
 			end
 		end
-
 		-- Prevent crash on adapter disconnect
 		dap.listeners.after.disconnect["dap_disconnect_handler"] = function()
 			vim.schedule(function()
@@ -70,7 +80,15 @@ return {
 				program = function()
 					-- Auto-build before debugging
 					print("Building project...")
-					local build_result = vim.fn.system("dotnet build --configuration:Debug")
+					-- Find .csproj file in current directory
+					local csproj = vim.fn.glob(vim.fn.getcwd() .. "/*.csproj")
+					if csproj == "" then
+						vim.schedule(function()
+							vim.notify("No .csproj file found in current directory", vim.log.levels.ERROR)
+						end)
+						return dap.ABORT
+					end
+					local build_result = vim.fn.system("dotnet build " .. vim.fn.shellescape(csproj) .. " --configuration Debug")
 					if vim.v.shell_error ~= 0 then
 						vim.schedule(function()
 							vim.notify("Build failed:\n" .. build_result, vim.log.levels.ERROR)
