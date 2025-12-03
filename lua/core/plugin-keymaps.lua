@@ -2,6 +2,27 @@
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>fs", builtin.find_files, { desc = "Find files" })
 vim.keymap.set("n", "<leader>fp", builtin.git_files, { desc = "Find git files" })
+local function live_grep_type()
+  vim.ui.input({ prompt = "Search (append type:go or type:ts): " }, function(input)
+    if not input or input == "" then return end
+
+    -- detect pattern like:  type:go
+    local ftype = string.match(input, "type:(%w+)")
+    local search = input:gsub("type:%w+", ""):gsub("%s+$", "")
+
+    builtin.live_grep({
+      default_text = search,
+      additional_args = function()
+        if ftype then
+          return { "--glob=*." .. ftype }
+        end
+        return {}
+      end
+    })
+  end)
+end
+
+vim.keymap.set("n", "<leader>ft", live_grep_type, { desc = "Smart live grep with filetype filter" })
 vim.keymap.set("n", "<leader>fz", builtin.live_grep, { desc = "Live grep" })
 vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Old files" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
