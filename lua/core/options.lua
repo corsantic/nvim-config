@@ -73,7 +73,7 @@ require("bufferline").setup({})
 -- telescope setup
 require("telescope").setup({
 	defaults = {
-		file_ignore_patterns = { "node_modules", "venv", "dist", "build", "%.png" },
+		file_ignore_patterns = { "node_modules", "venv", "dist", "build", "%.png", "%.aseprite" },
 	},
 	extensions = {
 		["ui-select"] = {
