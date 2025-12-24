@@ -41,6 +41,9 @@ opt.smartcase = true
 -- cursor line
 opt.cursorline = true
 
+-- status line
+vim.opt.statusline = "%f %m %r %= %{FugitiveHead()} %l:%c %p%%"
+
 -- appearance
 
 opt.termguicolors = true
