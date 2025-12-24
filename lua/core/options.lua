@@ -232,20 +232,22 @@ end
 local dapui = require("dapui")
 
 dap.listeners.after.event_initialized.dapui_config = function()
-  pcall(function() dapui.open() end)
+	pcall(function()
+		dapui.open()
+	end)
 end
 
 dap.listeners.before.event_terminated.dapui_config = function()
-  pcall(dapui.close)
+	pcall(dapui.close)
 end
 
 dap.listeners.before.event_exited.dapui_config = function()
-  pcall(dapui.close)
+	pcall(dapui.close)
 end
-vim.keymap.set("n", "<leader>db", require("dap").toggle_breakpoint, { noremap = true })
-vim.keymap.set("n", "<leader>dc", require("dap").continue, { noremap = true })
-vim.keymap.set("n", "<leader>do", require("dap").step_over, { noremap = true })
-vim.keymap.set("n", "<leader>di", require("dap").step_into, { noremap = true })
+vim.keymap.set("n", "<leader>db", require("dap").toggle_breakpoint, { noremap = true, desc = "Dap toggle breakpoint" })
+vim.keymap.set("n", "<leader>dc", require("dap").continue, { noremap = true, desc = "Dap continue" })
+vim.keymap.set("n", "<leader>do", require("dap").step_over, { noremap = true, desc = "Dap step over" })
+vim.keymap.set("n", "<leader>di", require("dap").step_into, { noremap = true, desc = "Dap step into" })
 
 vim.keymap.set("n", "<leader>dl", function()
 	require("osv").launch({ port = 8086 })
@@ -268,4 +270,3 @@ vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,
 require("notify").setup({
 	background_colour = "#000000",
 })
-
