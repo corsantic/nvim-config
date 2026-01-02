@@ -152,7 +152,7 @@ return {
         ensure_installed = {
           "ts_ls",
           "lua_ls", "angularls", "cssls", "emmet_language_server", "zls", "tailwindcss",
-          "sqlls", "basedpyright", "elixirls"
+          "sqlls", "basedpyright", "elixirls", "rust_analyzer"
         },
         handlers = {
           -- this first function is the "default handler"
