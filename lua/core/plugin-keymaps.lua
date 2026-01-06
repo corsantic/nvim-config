@@ -3,23 +3,25 @@ local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>fs", builtin.find_files, { desc = "Find files" })
 vim.keymap.set("n", "<leader>fp", builtin.git_files, { desc = "Find git files" })
 local function live_grep_type()
-  vim.ui.input({ prompt = "Search (append type:go or type:ts): " }, function(input)
-    if not input or input == "" then return end
+	vim.ui.input({ prompt = "Search (append type:go or type:ts): " }, function(input)
+		if not input or input == "" then
+			return
+		end
 
-    -- detect pattern like:  type:go
-    local ftype = string.match(input, "type:(%w+)")
-    local search = input:gsub("type:%w+", ""):gsub("%s+$", "")
+		-- detect pattern like:  type:go
+		local ftype = string.match(input, "type:(%w+)")
+		local search = input:gsub("type:%w+", ""):gsub("%s+$", "")
 
-    builtin.live_grep({
-      default_text = search,
-      additional_args = function()
-        if ftype then
-          return { "--glob=*." .. ftype }
-        end
-        return {}
-      end
-    })
-  end)
+		builtin.live_grep({
+			default_text = search,
+			additional_args = function()
+				if ftype then
+					return { "--glob=*." .. ftype }
+				end
+				return {}
+			end,
+		})
+	end)
 end
 
 vim.keymap.set("n", "<leader>ft", live_grep_type, { desc = "Smart live grep with filetype filter" })
@@ -44,7 +46,75 @@ vim.keymap.set({ "n", "x" }, "<leader>cc", function()
 end, { desc = "Clipboard history" })
 vim.keymap.set("n", "<leader>fh", builtin.command_history, { desc = "Command history" })
 vim.keymap.set("n", "<leader>fg", builtin.git_status, { desc = "Git status" })
-vim.keymap.set("n", "<leader>gr", builtin.lsp_references, { noremap = true, silent = true, desc = "References" })
+-- Custom handler to deduplicate LSP references and show in Telescope
+local function lsp_references_dedupe()
+	local params = vim.lsp.util.make_position_params(0, "utf-8")
+
+	vim.lsp.buf_request(
+		0,
+		"textDocument/references",
+		vim.tbl_extend("force", params, {
+			context = { includeDeclaration = false },
+		}),
+		function(err, result, ctx, config)
+			if err then
+				vim.notify("Error getting references: " .. tostring(err), vim.log.levels.ERROR)
+				return
+			end
+
+			if not result or vim.tbl_isempty(result) then
+				vim.notify("No references found", vim.log.levels.INFO)
+				return
+			end
+
+			-- Deduplicate based on uri, range.start.line, and range.start.character
+			local seen = {}
+			local deduplicated = {}
+
+			for _, ref in ipairs(result) do
+				local key =
+					string.format("%s:%d:%d", ref.uri or ref.targetUri, ref.range.start.line, ref.range.start.character)
+
+				if not seen[key] then
+					seen[key] = true
+					table.insert(deduplicated, ref)
+				end
+			end
+
+			-- Convert to items and show in Telescope
+			local items = vim.lsp.util.locations_to_items(deduplicated, "utf-8")
+
+			local conf = require("telescope.config").values
+			require("telescope.pickers")
+				.new(
+					require("telescope.themes").get_cursor({
+						layout_config = {
+							width = 0.8,
+							height = 0.5,
+						},
+						initial_mode = "normal",
+					}),
+					{
+						prompt_title = "LSP References (Deduplicated)",
+						finder = require("telescope.finders").new_table({
+							results = items,
+							entry_maker = require("telescope.make_entry").gen_from_quickfix(),
+						}),
+						previewer = conf.qflist_previewer({}),
+						sorter = conf.generic_sorter({}),
+					}
+				)
+				:find()
+		end
+	)
+end
+
+vim.keymap.set(
+	"n",
+	"<leader>gr",
+	lsp_references_dedupe,
+	{ noremap = true, silent = true, desc = "References (deduplicated)" }
+)
 vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, { noremap = true, silent = true, desc = "Definitions" })
 vim.keymap.set("n", "<leader>fx", builtin.resume, { noremap = true, silent = true, desc = "Resume" })
 vim.keymap.set("n", "<leader>?", builtin.keymaps, { noremap = true, silent = true, desc = "Keymaps" })
@@ -139,7 +209,12 @@ vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var", { desc = "Ref
 vim.keymap.set({ "n", "x" }, "<leader>rI", ":Refactor inline_func", { desc = "Refactor inline function" })
 
 vim.keymap.set({ "n", "x" }, "<leader>rb", ":Refactor extract_block", { desc = "Refactor extract block" })
-vim.keymap.set({ "n", "x" }, "<leader>rbf", ":Refactor extract_block_to_file", { desc = "Refactor extract block to file" })
+vim.keymap.set(
+	{ "n", "x" },
+	"<leader>rbf",
+	":Refactor extract_block_to_file",
+	{ desc = "Refactor extract block to file" }
+)
 
 -- vim bbye
 vim.keymap.set("n", "<leader>q", ":Bdelete<cr>", { desc = "Delete buffer" })
