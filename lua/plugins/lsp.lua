@@ -144,7 +144,7 @@ return {
           vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
           vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
           -- vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-          vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+          vim.keymap.set({'n','v'}, '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
         end,
       })
 
@@ -152,7 +152,7 @@ return {
         ensure_installed = {
           "ts_ls",
           "lua_ls", "angularls", "cssls", "emmet_language_server", "zls", "tailwindcss",
-          "sqlls", "basedpyright", "elixirls", "rust_analyzer"
+          "sqlls", "basedpyright", "elixirls", "gopls"
         },
         handlers = {
           -- this first function is the "default handler"
@@ -272,6 +272,20 @@ return {
                   format = {
                     enable = false,
                   },
+                },
+              },
+            })
+          end,
+          ["gopls"] = function()
+            require("lspconfig").gopls.setup({
+              settings = {
+                gopls = {
+                  analyses = {
+                    unusedparams = true,
+                  },
+                  staticcheck = true,
+                  gofumpt = true,
+                  completeUnimported = true,
                 },
               },
             })
