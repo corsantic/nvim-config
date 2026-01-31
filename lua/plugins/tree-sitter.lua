@@ -25,6 +25,7 @@ return {
 					"heex",
 					"http",
 					"dart",
+          "go"
 				},
 				highlight = {
 					enable = true,
