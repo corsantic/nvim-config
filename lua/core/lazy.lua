@@ -28,4 +28,8 @@ require("lazy").setup({
   },
   install = { colorscheme = { "habamax" } },
   checker = { enabled = true },
+  rocks = {
+    enabled = true,
+    hererocks = true, -- Use hererocks to install lua 5.1
+  },
 })
