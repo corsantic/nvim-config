@@ -12,6 +12,10 @@ return {
 		},
 	},
 	config = function()
-		require("rest-nvim").setup()
+		require("rest-nvim").setup({
+			request = {
+				skip_ssl_verification = true,
+			},
+		})
 	end,
 }
