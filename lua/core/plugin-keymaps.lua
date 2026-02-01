@@ -194,3 +194,7 @@ vim.keymap.set("n", "<leader><leader>h", smart_split.swap_buf_left, { desc = "Sw
 vim.keymap.set("n", "<leader><leader>j", smart_split.swap_buf_down, { desc = "Swap buffer down" })
 vim.keymap.set("n", "<leader><leader>k", smart_split.swap_buf_up, { desc = "Swap buffer up" })
 vim.keymap.set("n", "<leader><leader>l", smart_split.swap_buf_right, { desc = "Swap buffer right" })
+
+
+-- Rest nvim
+vim.keymap.set("n", "<leader>tr", ":Rest run<cr>", { desc = "Run REST request" })
