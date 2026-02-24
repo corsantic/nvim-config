@@ -137,6 +137,20 @@ vim.keymap.set("n", "<leader>fm", function()
 	})
 end, { desc = "Format with Conform or LSP" })
 
+vim.keymap.set("v", "<leader>fm", function()
+	local start_pos = vim.api.nvim_buf_get_mark(0, "<")
+	local end_pos = vim.api.nvim_buf_get_mark(0, ">")
+
+	require("conform").format({
+		async = false,
+		lsp_fallback = true,
+		range = {
+			start = { start_pos[1], start_pos[2] },
+			["end"] = { end_pos[1], end_pos[2] },
+		},
+	})
+end, { desc = "Format selection with Conform/LSP" })
+
 -- fugitive
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Fugitive" })
 
