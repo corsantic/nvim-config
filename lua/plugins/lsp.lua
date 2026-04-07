@@ -140,14 +140,29 @@ return {
 					vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
 					vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
 					vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
-					vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>", opts)
-					vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>", opts)
+					vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.jump({ count = 1 })<cr>", opts)
+					vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.jump({ count = -1 })<cr>", opts)
 					-- this one handled by telescope now
 					-- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
 					vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
 					vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 					-- vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
 					vim.keymap.set({ "n", "v" }, "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if client and client:supports_method("textDocument/documentHighlight") then
+						local highlight_group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
+						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+							buffer = event.buf,
+							group = highlight_group,
+							callback = vim.lsp.buf.document_highlight,
+						})
+						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+							buffer = event.buf,
+							group = highlight_group,
+							callback = vim.lsp.buf.clear_references,
+						})
+					end
 				end,
 			})
 
@@ -194,7 +209,7 @@ return {
 					end,
 					["ts_ls"] = function()
 						require("lspconfig").ts_ls.setup({
-							filetypes = { "typescript" },
+							filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
 							root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", ".git"),
 							on_attach = function(client)
 								-- Only enable formatting
