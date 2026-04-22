@@ -222,6 +222,15 @@ vim.diagnostic.config({
 	signs = true,
 })
 
+-- Quit nvim when all UIs detach (prevents zombie nvim --embed processes)
+vim.api.nvim_create_autocmd("UILeave", {
+	callback = function()
+		if #vim.api.nvim_list_uis() == 0 then
+			vim.cmd("quitall!")
+		end
+	end,
+})
+
 -- dap
 
 local dap = require("dap")
