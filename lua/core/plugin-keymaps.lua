@@ -108,17 +108,14 @@ vim.keymap.set("", "T", function()
 end, { remap = true, desc = "Hop backward till char" })
 
 -- refactoring
-vim.keymap.set("x", "<leader>re", ":Refactor extract ", { desc = "Refactor extract" })
-vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ", { desc = "Refactor extract to file" })
+vim.keymap.set("x", "<leader>re", ":Refactor extract_func<cr>", { desc = "Refactor extract function" })
+vim.keymap.set("x", "<leader>rf", ":Refactor extract_func_to_file<cr>", { desc = "Refactor extract function to file" })
 
-vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ", { desc = "Refactor extract variable" })
+vim.keymap.set("x", "<leader>rv", ":Refactor extract_var<cr>", { desc = "Refactor extract variable" })
 
-vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var", { desc = "Refactor inline variable" })
+vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var<cr>", { desc = "Refactor inline variable" })
 
-vim.keymap.set({ "n", "x" }, "<leader>rI", ":Refactor inline_func", { desc = "Refactor inline function" })
-
-vim.keymap.set({ "n", "x" }, "<leader>rb", ":Refactor extract_block", { desc = "Refactor extract block" })
-vim.keymap.set({ "n", "x" }, "<leader>rbf", ":Refactor extract_block_to_file", { desc = "Refactor extract block to file" })
+vim.keymap.set({ "n", "x" }, "<leader>rI", ":Refactor inline_func<cr>", { desc = "Refactor inline function" })
 
 -- vim bbye
 vim.keymap.set("n", "<leader>q", ":Bdelete<cr>", { desc = "Delete buffer" })
