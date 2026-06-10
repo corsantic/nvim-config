@@ -2,7 +2,8 @@ return {
     "seblyng/roslyn.nvim",
     ---@module 'roslyn.config'
     ---@type RoslynNvimConfig
-    opts = {
-        -- your configuration comes here; leave empty for default settings
-    },
+    init = function()
+        vim.env.DOTNET_ROOT = "/usr/local/share/dotnet"
+    end,
+    opts = {},
 }

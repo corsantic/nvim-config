@@ -265,9 +265,7 @@ return {
 							},
 						})
 					end,
-					["roslyn"] = function()
-						require("lspconfig").roslyn.setup({})
-					end,
+					["roslyn"] = function() end,
 					["basedpyright"] = function()
 						require("lspconfig").basedpyright.setup({
 							root_dir = require("lspconfig.util").root_pattern(

@@ -19,7 +19,7 @@ return {
         -- Whether to enable virtual text of not for filetypes not specifically listed above.
         default_filetype_enabled = true,
         -- How long to wait (in ms) before requesting completions after typing stops.
-        idle_delay = 75,
+        idle_delay = 30,
         -- Priority of the virtual text. This usually ensures that the completions appear on top of
         -- other plugins that also add virtual text, such as LSP inlay hints, but can be modified if
         -- desired.
