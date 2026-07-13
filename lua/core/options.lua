@@ -79,6 +79,12 @@ require("telescope").setup({
 		file_ignore_patterns = { "node_modules", "venv", "dist", "build", "%.png" },
 	},
 	extensions = {
+		fzf = {
+			fuzzy = true,
+			override_generic_sorter = true,
+			override_file_sorter = true,
+			case_mode = "smart_case",
+		},
 		["ui-select"] = {
 			require("telescope.themes").get_dropdown({
 				-- even more opts
@@ -121,6 +127,7 @@ require("telescope").setup({
 		},
 	},
 })
+require("telescope").load_extension("fzf")
 require("telescope").load_extension("ui-select")
 require("telescope").load_extension("rest")
 require("telescope").load_extension("neoclip")
