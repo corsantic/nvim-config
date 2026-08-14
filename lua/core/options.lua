@@ -69,10 +69,6 @@ opt.iskeyword:append("-")
 
 opt.termguicolors = true
 opt.updatetime = 50
---bufferline
-
-require("bufferline").setup({})
-
 -- telescope setup
 require("telescope").setup({
 	defaults = {
