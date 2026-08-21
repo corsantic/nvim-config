@@ -121,6 +121,11 @@ return {
 			vim.opt.signcolumn = "yes"
 		end,
 		config = function()
+			-- nvim 0.12 auto-registers every lsp/*.lua on the runtimepath, and
+			-- nvim-lspconfig ships gitlab_duo.lua with root_markers = { ".git" },
+			-- so it spawns `npx @gitlab-org/gitlab-lsp` in any git repo. Not used.
+			vim.lsp.enable("gitlab_duo", false)
+
 			local lsp_defaults = require("lspconfig").util.default_config
 
 			-- Add cmp_nvim_lsp capabilities settings to lspconfig
@@ -148,6 +153,14 @@ return {
 					vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 					-- vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
 					vim.keymap.set({ "n", "v" }, "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+
+					-- Roslyn's inlay hints crash the decoration provider with
+					-- "Invalid 'col': out of range" (inlay_hint.lua:362) when a
+					-- cached hint's column outlives the edit that shortened the
+					-- line. Nvim doesn't clamp the column, so keep them off here.
+					if vim.bo[event.buf].filetype == "cs" then
+						vim.lsp.inlay_hint.enable(false, { bufnr = event.buf })
+					end
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client:supports_method("textDocument/documentHighlight") then
@@ -264,9 +277,6 @@ return {
 								},
 							},
 						})
-					end,
-					["roslyn"] = function()
-						require("lspconfig").roslyn.setup({})
 					end,
 					["basedpyright"] = function()
 						require("lspconfig").basedpyright.setup({
