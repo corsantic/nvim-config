@@ -23,7 +23,9 @@ vim.keymap.set({ "n", "x" }, "<leader>cc", function()
 end, { desc = "Clipboard history" })
 vim.keymap.set("n", "<leader>fh", builtin.command_history, { desc = "Command history" })
 vim.keymap.set("n", "<leader>fg", builtin.git_status, { desc = "Git status" })
+-- builtin telescope crashes on roslyn source-generated files; use native lsp for now
 vim.keymap.set("n", "<leader>gr", builtin.lsp_references, { noremap = true, silent = true, desc = "References" })
+-- vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { noremap = true, silent = true, desc = "References" })
 vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, { noremap = true, silent = true, desc = "Definitions" })
 vim.keymap.set("n", "<leader>fx", builtin.resume, { noremap = true, silent = true, desc = "Resume" })
 vim.keymap.set("n", "<leader>?", builtin.keymaps, { noremap = true, silent = true, desc = "Keymaps" })
@@ -153,6 +155,39 @@ require("gitsigns").setup({
 		end
 		map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview git hunk" })
 		map("n", "<leader>g[", gitsigns.preview_hunk_inline, { desc = "Preview git hunk inline" })
+
+		-- navigate hunks
+		map("n", "]c", function()
+			if vim.wo.diff then
+				vim.cmd.normal({ "]c", bang = true })
+			else
+				gitsigns.nav_hunk("next")
+			end
+		end, { desc = "Next git hunk" })
+		map("n", "[c", function()
+			if vim.wo.diff then
+				vim.cmd.normal({ "[c", bang = true })
+			else
+				gitsigns.nav_hunk("prev")
+			end
+		end, { desc = "Prev git hunk" })
+
+		-- revert (reset) hunks
+		map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Reset git hunk" })
+		map("v", "<leader>hr", function()
+			gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+		end, { desc = "Reset git hunk (selection)" })
+		map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset whole buffer" })
+
+		-- stage / undo stage
+		map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage git hunk" })
+		map("v", "<leader>hs", function()
+			gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+		end, { desc = "Stage git hunk (selection)" })
+		map("n", "<leader>hu", gitsigns.undo_stage_hunk, { desc = "Undo stage hunk" })
+
+		-- text object: hunk
+		map({ "o", "x" }, "ih", gitsigns.select_hunk, { desc = "Select git hunk" })
 	end,
 })
 
