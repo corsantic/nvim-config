@@ -3,10 +3,11 @@ return {
   event = "InsertEnter",
   dependencies = {
     "nvim-lua/plenary.nvim",
+    "hrsh7th/nvim-cmp",
   },
   config = function()
     require("codeium").setup({
-      enable_cmp_source = false,
+      enable_cmp_source = true,
       virtual_text = {
         enabled = true,
         -- These are the defaults
@@ -18,7 +19,7 @@ return {
         -- Whether to enable virtual text of not for filetypes not specifically listed above.
         default_filetype_enabled = true,
         -- How long to wait (in ms) before requesting completions after typing stops.
-        idle_delay = 250,
+        idle_delay = 30,
         -- Priority of the virtual text. This usually ensures that the completions appear on top of
         -- other plugins that also add virtual text, such as LSP inlay hints, but can be modified if
         -- desired.
@@ -45,5 +46,18 @@ return {
         }
       }
     })
+
+    -- Remove ^M characters from Codeium completions
+    local cmp = require("cmp")
+    local source = cmp.get_config().sources
+    for _, s in ipairs(source) do
+      if s.name == "codeium" then
+        s.entry_filter = function(entry)
+          local completion_text = entry:get_completion_item().label or ""
+          entry:get_completion_item().label = completion_text:gsub('\r', '')
+          return true
+        end
+      end
+    end
   end
 }
