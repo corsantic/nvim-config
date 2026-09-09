@@ -42,12 +42,15 @@ return {
 					{ name = "nvim_lsp", priority = 1000 },
 					{ name = "vim-dadbod-completion", priority = 700 },
 					{ name = "luasnip", priority = 750 }, -- For luasnip users.
+					{ name = "codeium", priority = 500 },
 					{ name = "buffer", priority = 500 }, -- For buffer words.
 					{ name = "path", priority = 300 }, -- For file paths.
 				},
 				mapping = cmp.mapping.preset.insert({
 					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
+					["<C-y>"] = cmp.mapping(function(fallback)
+						fallback() -- Let C-y do nothing in cmp
+					end),
 					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if luasnip.expand_or_jumpable() and not cmp.visible() then
@@ -77,9 +80,6 @@ return {
 					expand = function(args)
 						luasnip.lsp_expand(args.body)
 					end,
-				},
-				experimental = {
-					ghost_text = true,
 				},
 			})
 
