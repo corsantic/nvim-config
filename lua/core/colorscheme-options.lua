@@ -185,14 +185,14 @@ require("onedark").setup({
 
 require("everforest").setup({
 	background = "hard",
-  transparent_background_level = 1
+  transparent_background_level = 0
 })
 
 -- vim.cmd("colorscheme onedark")
 -- vim.cmd("colorscheme tokyonight-night")
 -- vim.cmd("colorscheme sonokai")
--- vim.cmd("colorscheme gruvbox-material")
-vim.cmd("colorscheme everforest")
+vim.cmd("colorscheme gruvbox-material")
+-- vim.cmd("colorscheme everforest")
 -- vim.cmd("colorscheme kanagawa")
 
 -- vim.cmd("colorscheme gruvbox-material")
