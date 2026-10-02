@@ -248,6 +248,12 @@ vim.keymap.set("n", "<leader>sf", '<cmd>lua require("spectre").open_file_search(
 	desc = "Search on current file",
 })
 
+-- diffview
+vim.keymap.set("n", "<leader>gv", "<cmd>DiffviewOpen<cr>", { desc = "Diffview: working tree vs index" })
+vim.keymap.set("n", "<leader>gq", "<cmd>DiffviewClose<cr>", { desc = "Diffview: close" })
+vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", { desc = "Diffview: current file history" })
+vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<cr>", { desc = "Diffview: branch history" })
+
 -- gitsigns
 
 require("gitsigns").setup({
