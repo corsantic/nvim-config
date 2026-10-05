@@ -78,3 +78,20 @@ vim.keymap.set("n", "<leader>sd", function()
     virtual_text = not is_visible
   })
 end, { desc = "Toggle diagnostic virtual text" })
+
+-- C: build current file's CMake target and run it (expects out-of-source build in ./build)
+local CMAKE_BUILD_DIR = "build"
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "c",
+	callback = function(ev)
+		vim.keymap.set("n", "<leader>cr", function()
+			local target = vim.fn.expand("%:t:r")
+			local cmd = string.format(
+				"cmake --build %s --target %s && ./%s/%s",
+				CMAKE_BUILD_DIR, target, CMAKE_BUILD_DIR, target
+			)
+			vim.cmd("botright split | terminal " .. cmd)
+			vim.cmd("startinsert")
+		end, { buffer = ev.buf, desc = "C: cmake build + run current file" })
+	end,
+})

@@ -20,6 +20,30 @@ return {
 			args = { "--interpreter=vscode" },
 		}
 
+		-- C/C++ configuration using codelldb (mason)
+		dap.adapters.codelldb = {
+			type = "server",
+			port = "${port}",
+			executable = {
+				command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+				args = { "--port", "${port}" },
+			},
+		}
+
+		dap.configurations.c = {
+			{
+				name = "Launch binary",
+				type = "codelldb",
+				request = "launch",
+				program = function()
+					return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/bin/program", "file")
+				end,
+				cwd = "${workspaceFolder}",
+				stopOnEntry = false,
+			},
+		}
+		dap.configurations.cpp = dap.configurations.c
+
 		-- Kill process on debug stop
 		dap.listeners.after.event_terminated.cleanup = function(session)
 			if session and session.config and session.config.pid then

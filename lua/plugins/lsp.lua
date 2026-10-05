@@ -179,6 +179,7 @@ return {
 					"basedpyright",
 					"elixirls",
 					"gopls",
+					"clangd",
 				},
 				handlers = {
 					-- this first function is the "default handler"
