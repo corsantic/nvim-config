@@ -125,12 +125,11 @@ return {
 			-- so it spawns `npx @gitlab-org/gitlab-lsp` in any git repo. Not used.
 			vim.lsp.enable("gitlab_duo", false)
 
-			local lsp_defaults = require("lspconfig").util.default_config
-
-			-- Add cmp_nvim_lsp capabilities settings to lspconfig
+			-- Add cmp_nvim_lsp capabilities to every server
 			-- This should be executed before you configure any language server
-			lsp_defaults.capabilities =
-				vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+			vim.lsp.config("*", {
+				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			})
 
 			-- LspAttach is where you enable features that only work
 			-- if there is a language server active in the file
@@ -178,6 +177,126 @@ return {
 				end,
 			})
 
+			-- Server configs (Nvim 0.11+ API). mason-lspconfig enables installed servers
+			-- via vim.lsp.enable(); these configs are merged in on attach.
+			vim.lsp.config("zls", {
+				settings = {
+					zls = {
+						enable_autofix = false,
+						line_break_length = 80,
+						format_on_save = false,
+					},
+				},
+			})
+			vim.lsp.config("angularls", {
+				filetypes = { "typescript", "html", "htmlangular" },
+				root_markers = { "angular.json", "project.json", "package.json" },
+			})
+			vim.lsp.config("ts_ls", {
+				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+				root_markers = { "package.json", "tsconfig.json", ".git" },
+				on_attach = function(client)
+					-- Only enable formatting
+					client.server_capabilities.definitionProvider = true
+					client.server_capabilities.referencesProvider = false
+					client.server_capabilities.hoverProvider = false
+					client.server_capabilities.renameProvider = false
+					-- ... disable everything except:
+					client.server_capabilities.documentFormattingProvider = true
+				end,
+			})
+			vim.lsp.config("cssls", {
+				filetypes = { "css", "scss", "sass", "less" },
+			})
+			vim.lsp.config("emmet_language_server", {
+				filetypes = {
+					"html",
+					"htmlangular",
+					"css",
+					"scss",
+					"sass",
+					"less",
+					"eelixir",
+					"heex",
+					"elixir",
+				},
+			})
+			vim.lsp.config("tailwindcss", {
+				filetypes = { "html", "elixir", "eelixir", "heex" },
+				init_options = {
+					userLanguages = {
+						elixir = "html-eex",
+						eelixir = "html-eex",
+						heex = "html-eex",
+					},
+				},
+				settings = {
+					tailwindCSS = {
+						experimental = {
+							classRegex = {
+								'class[:]\\s*"([^"]*)"',
+							},
+						},
+					},
+				},
+			})
+			vim.lsp.config("basedpyright", {
+				root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
+				settings = {
+					basedpyright = {
+						analysis = {
+							autoImportCompletions = true,
+							autoSearchPaths = true,
+							diagnosticMode = "workspace",
+							useLibraryCodeForTypes = true,
+							typeCheckingMode = "basic",
+							diagnosticSeverityOverrides = {
+								reportArgumentType = "warning",
+							},
+						},
+					},
+				},
+			})
+			vim.lsp.config("elixirls", {
+				filetypes = { "elixir", "eelixir", "heex", "phoenix-heex", "surface" },
+			})
+			vim.lsp.config("lua_ls", {
+				settings = {
+					Lua = {
+						runtime = {
+							version = "LuaJIT",
+						},
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							checkThirdParty = false,
+							library = {
+								vim.env.VIMRUNTIME,
+							},
+						},
+						telemetry = {
+							enable = false,
+						},
+						format = {
+							enable = false,
+						},
+					},
+				},
+			})
+			vim.lsp.config("gopls", {
+				settings = {
+					gopls = {
+						analyses = {
+							unusedparams = true,
+						},
+						staticcheck = true,
+						gofumpt = true,
+						completeUnimported = true,
+					},
+				},
+			})
+
 			require("mason-lspconfig").setup({
 				ensure_installed = {
 					"ts_ls",
@@ -192,157 +311,8 @@ return {
 					"elixirls",
 					"gopls",
 				},
-				handlers = {
-					-- this first function is the "default handler"
-					-- it applies to every language server without a "custom handler"
-					function(server_name)
-						require("lspconfig")[server_name].setup({})
-					end,
-					["zls"] = function()
-						require("lspconfig").zls.setup({
-							settings = {
-								zls = {
-									enable_autofix = false,
-									line_break_length = 80,
-									format_on_save = false,
-								},
-							},
-						})
-					end,
-					["angularls"] = function()
-						require("lspconfig").angularls.setup({
-							filetypes = { "typescript", "html", "htmlangular" },
-							root_dir = require("lspconfig.util").root_pattern(
-								"angular.json",
-								"project.json",
-								"package.json"
-							),
-						})
-					end,
-					["ts_ls"] = function()
-						require("lspconfig").ts_ls.setup({
-							filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
-							root_dir = require("lspconfig.util").root_pattern("package.json", "tsconfig.json", ".git"),
-							on_attach = function(client)
-								-- Only enable formatting
-								client.server_capabilities.definitionProvider = true
-								client.server_capabilities.referencesProvider = false
-								client.server_capabilities.hoverProvider = false
-								client.server_capabilities.renameProvider = false
-								-- ... disable everything except:
-								client.server_capabilities.documentFormattingProvider = true
-							end,
-						})
-					end,
-					["cssls"] = function()
-						require("lspconfig").cssls.setup({
-							filetypes = { "css", "scss", "sass", "less" },
-						})
-					end,
-					["emmet_language_server"] = function()
-						local capabilities = vim.lsp.protocol.make_client_capabilities()
-						capabilities.textDocument.completion.completionItem.snippetSupport = true
-						require("lspconfig").emmet_language_server.setup({
-							filetypes = {
-								"html",
-								"htmlangular",
-								"css",
-								"scss",
-								"sass",
-								"less",
-								"eelixir",
-								"heex",
-								"elixir",
-							},
-						})
-					end,
-					["tailwindcss"] = function()
-						require("lspconfig").tailwindcss.setup({
-							filetypes = { "html", "elixir", "eelixir", "heex" },
-							init_options = {
-								userLanguages = {
-									elixir = "html-eex",
-									eelixir = "html-eex",
-									heex = "html-eex",
-								},
-							},
-							settings = {
-								tailwindCSS = {
-									experimental = {
-										classRegex = {
-											'class[:]\\s*"([^"]*)"',
-										},
-									},
-								},
-							},
-						})
-					end,
-					["basedpyright"] = function()
-						require("lspconfig").basedpyright.setup({
-							root_dir = require("lspconfig.util").root_pattern(
-								"pyproject.toml",
-								"setup.py",
-								"setup.cfg",
-								"requirements.txt",
-								".git"
-							),
-							settings = {
-								basedpyright = {
-									autoImportCompletions = true,
-									autoSearchPaths = true,
-									diagnosticMode = "workspace",
-									useLibraryCodeForTypes = true,
-									typeCheckingMode = "basic",
-								},
-							},
-						})
-					end,
-					["elixirls"] = function()
-						require("lspconfig").elixirls.setup({
-							filetypes = { "elixir", "eelixir", "heex", "phoenix-heex", "surface" },
-						})
-					end,
-					["lua_ls"] = function()
-						require("lspconfig").lua_ls.setup({
-							settings = {
-								Lua = {
-									runtime = {
-										version = "LuaJIT",
-									},
-									diagnostics = {
-										globals = { "vim" },
-									},
-									workspace = {
-										checkThirdParty = false,
-										library = {
-											vim.env.VIMRUNTIME,
-										},
-									},
-									telemetry = {
-										enable = false,
-									},
-									format = {
-										enable = false,
-									},
-								},
-							},
-						})
-					end,
-					["gopls"] = function()
-						require("lspconfig").gopls.setup({
-							settings = {
-								gopls = {
-									analyses = {
-										unusedparams = true,
-									},
-									staticcheck = true,
-									gofumpt = true,
-									completeUnimported = true,
-								},
-							},
-						})
-					end,
-				},
+				-- roslyn is handled elsewhere; keep mason-lspconfig from enabling it
+				automatic_enable = { exclude = { "roslyn" } },
 			})
 		end,
 	},
