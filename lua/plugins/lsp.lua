@@ -121,11 +121,6 @@ return {
 			vim.opt.signcolumn = "yes"
 		end,
 		config = function()
-			-- nvim 0.12 auto-registers every lsp/*.lua on the runtimepath, and
-			-- nvim-lspconfig ships gitlab_duo.lua with root_markers = { ".git" },
-			-- so it spawns `npx @gitlab-org/gitlab-lsp` in any git repo. Not used.
-			vim.lsp.enable("gitlab_duo", false)
-
 			-- Add cmp_nvim_lsp capabilities to every server
 			-- This should be executed before you configure any language server
 			vim.lsp.config("*", {
