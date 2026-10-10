@@ -299,7 +299,6 @@ vim.keymap.set("n", "<C-h>", smart_split.move_cursor_left, { desc = "Move to lef
 vim.keymap.set("n", "<C-j>", smart_split.move_cursor_down, { desc = "Move to split below" })
 vim.keymap.set("n", "<C-k>", smart_split.move_cursor_up, { desc = "Move to split above" })
 vim.keymap.set("n", "<C-l>", smart_split.move_cursor_right, { desc = "Move to right split" })
-vim.keymap.set("n", "<C-\\>", smart_split.move_cursor_previous, { desc = "Move to previous split" })
 -- swapping buffers between windows
 vim.keymap.set("n", "<leader><leader>h", smart_split.swap_buf_left, { desc = "Swap buffer left" })
 vim.keymap.set("n", "<leader><leader>j", smart_split.swap_buf_down, { desc = "Swap buffer down" })
