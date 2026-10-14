@@ -6,8 +6,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
   },
   opts = function()
-
-    require("go").setup(opts)
     local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = "*.go",
@@ -17,6 +15,8 @@ return {
       group = format_sync_grp,
     })
     return {
+      -- hints enabled per go buffer in lsp.lua LspAttach; global enable crashes nvim 0.12 inlay renderer in other filetypes
+      lsp_inlay_hints = { enable = false },
       -- lsp_keymaps = false,
       -- other options
     }

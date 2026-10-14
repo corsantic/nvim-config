@@ -121,6 +121,9 @@ return {
 			vim.opt.signcolumn = "yes"
 		end,
 		config = function()
+			-- Filetypes that get LSP inlay hints (per buffer, never global)
+			local INLAY_HINT_FILETYPES = { go = true }
+
 			-- Add cmp_nvim_lsp capabilities to every server
 			-- This should be executed before you configure any language server
 			vim.lsp.config("*", {
@@ -149,6 +152,13 @@ return {
 					vim.keymap.set({ "n", "v" }, "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if
+						client
+						and client:supports_method("textDocument/inlayHint")
+						and INLAY_HINT_FILETYPES[vim.bo[event.buf].filetype]
+					then
+						vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+					end
 					if client and client:supports_method("textDocument/documentHighlight") then
 						local highlight_group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
