@@ -7,8 +7,10 @@ return {
   opts = {
     terminal = {
       split_side = "right",
-      split_width_percentage = 0.30,
+      split_width_percentage = 0.40,
       snacks_win_opts = {
+        -- Use editor Normal bg instead of NormalFloat; NormalFloat == Visual bg in gruvbox-material, which hid selections
+        wo = { winhighlight = "Normal:Normal,NormalNC:Normal" },
         keys = {
           claude_hide = { "<M-c>", function(self) self:hide() end, mode = "t", desc = "Hide Claude" },
         },
@@ -18,6 +20,7 @@ return {
   keys = {
     { "<M-c>",      "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
     { "<leader>cf", "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
+    { "<leader>cC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue last Claude session" },
     { "<leader>cs", "<cmd>ClaudeCodeSend<cr>",        mode = "v", desc = "Send selection to Claude" },
     { "<leader>cb", "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add buffer to Claude" },
     { "<leader>ca", "<cmd>ClaudeCodeDiffAccept<cr>",  desc = "Accept Claude diff" },
