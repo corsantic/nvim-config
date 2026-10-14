@@ -222,10 +222,10 @@ vim.keymap.set("n", "<F8>", smart_split.resize_down, { desc = "Resize split down
 vim.keymap.set("n", "<F9>", smart_split.resize_up, { desc = "Resize split up" })
 vim.keymap.set("n", "<C-A-l>", smart_split.resize_right, { desc = "Resize split right" })
 -- moving between splits
-vim.keymap.set("n", "<C-h>", smart_split.move_cursor_left, { desc = "Move to left split" })
-vim.keymap.set("n", "<C-j>", smart_split.move_cursor_down, { desc = "Move to split below" })
-vim.keymap.set("n", "<C-k>", smart_split.move_cursor_up, { desc = "Move to split above" })
-vim.keymap.set("n", "<C-l>", smart_split.move_cursor_right, { desc = "Move to right split" })
+vim.keymap.set({ "n", "t" }, "<C-h>", smart_split.move_cursor_left, { desc = "Move to left split" })
+vim.keymap.set({ "n", "t" }, "<C-j>", smart_split.move_cursor_down, { desc = "Move to split below" })
+vim.keymap.set({ "n", "t" }, "<C-k>", smart_split.move_cursor_up, { desc = "Move to split above" })
+vim.keymap.set({ "n", "t" }, "<C-l>", smart_split.move_cursor_right, { desc = "Move to right split" })
 -- swapping buffers between windows
 vim.keymap.set("n", "<leader><leader>h", smart_split.swap_buf_left, { desc = "Swap buffer left" })
 vim.keymap.set("n", "<leader><leader>j", smart_split.swap_buf_down, { desc = "Swap buffer down" })
