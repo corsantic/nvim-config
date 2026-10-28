@@ -8,7 +8,7 @@ vim.keymap.set("n", "<leader>bx", ":bd<cr>", { desc = "Close buffer" })
 vim.keymap.set("n", "<leader>bd", ":bd | b#<cr>", { desc = "Close buffer and switch to alternate" })
 
 -- terminal
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+-- vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- yank to clipboard
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to clipboard" })
